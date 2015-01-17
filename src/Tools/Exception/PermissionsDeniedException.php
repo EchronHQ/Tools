@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Tools\Exception;
 
-class PermissionsDeniedException extends Exception
+class PermissionsDeniedException extends \Exception
 {
 
 }

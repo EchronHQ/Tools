@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace Tools;
 
+use Tools\Exception\PermissionsDeniedException;
+
 class FileSystem
 {
     public static function createDir(string $path, bool $recursive = true, $mode = 0777)
@@ -26,7 +28,7 @@ class FileSystem
 
         if ($exception !== null) {
             if ($exception->getMessage() === 'mkdir(): Permissions denied') {
-                throw new PermissionsDeniedException();
+                throw new PermissionsDeniedException('Unable to create directory "' . $path . '"');
             } else {
                 throw $exception;
             }

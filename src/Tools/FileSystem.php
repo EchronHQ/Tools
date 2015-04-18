@@ -36,4 +36,14 @@ class FileSystem
         }
 
     }
+
+    public static function canRead(string $path):bool
+    {
+        return is_readable($path);
+    }
+
+    public static function canWrite(string $path):bool
+    {
+        return is_writable($path);
+    }
 }

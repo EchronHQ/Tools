@@ -15,9 +15,8 @@ class FileSystem
 
             $created = mkdir($path, $mode, $recursive);
             if (!$created) {
-                $error = error_get_last();
-                if ($error !== null) {
-                    $exception = new \Exception($error['message']);
+                if (ExceptionHelper::hasLastError()) {
+                    $exception = ExceptionHelper::getLastError();
                 }
             }
 

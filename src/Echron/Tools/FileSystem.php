@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Echron\Tools;
 
-use Tools\Exception\PermissionsDeniedException;
+use Echron\Tools\Exception\PermissionsDeniedException;
 
 class FileSystem
 {
@@ -45,4 +45,15 @@ class FileSystem
     {
         return is_writable($path);
     }
+
+    public static function dirExists(string $path):bool
+    {
+        return file_exists($path) && is_dir($path);
+    }
+
+    public static function fileExists(string $path):bool
+    {
+        return file_exists($path) && is_file($path);
+    }
+
 }

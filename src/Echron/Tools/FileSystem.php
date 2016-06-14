@@ -36,12 +36,12 @@ class FileSystem
 
     }
 
-    public static function canRead(string $path):bool
+    public static function isReadable(string $path):bool
     {
         return is_readable($path);
     }
 
-    public static function canWrite(string $path):bool
+    public static function isWritable(string $path):bool
     {
         return is_writable($path);
     }

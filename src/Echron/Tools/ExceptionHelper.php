@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tools;
+namespace Echron\Tools;
 
 class ExceptionHelper
 {

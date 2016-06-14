@@ -1,6 +1,6 @@
 {
   "name": "echron/tools",
-  "description": "Tools library",
+  "description": "Tools library for PHP",
   "homepage": "https://github.com/echron/tools",
   "type": "library",
   "license": "MIT",

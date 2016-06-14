@@ -15,7 +15,7 @@ class ExceptionHelper
         $error = error_get_last();
         if ($error !== null) {
             $message = 'Unknown exception';
-            if (isset($error[$message])) {
+            if (isset($error['message'])) {
                 $message = $error['message'];
             }
 

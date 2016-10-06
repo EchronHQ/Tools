@@ -88,7 +88,7 @@ class FileSystem
                 if (ExceptionHelper::hasLastError()) {
                     $exception = ExceptionHelper::getLastError();
                 } else {
-                    $exception = \Exception('Unknown exception while adding file content to file ' . $path . '');
+                    $exception = new \Exception('Unknown exception while adding file content to file ' . $path . '');
                 }
             }
         } catch (\Exception $ex) {

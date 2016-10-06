@@ -85,12 +85,10 @@ class FileSystem
         try {
             $bytesWritten = file_put_contents($path, $content);
             if (!$bytesWritten) {
-                $ex = ExceptionHelper::getLastError();
-                if ($ex) {
-                    throw $ex;
-                } else {
-                    throw new \Exception('Unknown exception while adding file content to file ' . $path . '');
+                if (ExceptionHelper::hasLastError()) {
+                    $exception = ExceptionHelper::getLastError();
                 }
+
             }
         } catch (\Exception $ex) {
             $exception = new \Exception('Unable to add file content to file ' . $path . ': ' . $ex->getMessage());

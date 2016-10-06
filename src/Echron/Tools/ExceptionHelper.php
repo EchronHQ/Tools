@@ -23,7 +23,7 @@ class ExceptionHelper
             return new \Exception($message);
         }
 
-        return null;
+        return new \Exception(null);
     }
 
     public static function hasLastError():bool

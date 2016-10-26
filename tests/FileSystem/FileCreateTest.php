@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-class FileSystemTest extends PHPUnit_Framework_TestCase
+class FileCreateTest extends PHPUnit_Framework_TestCase
 {
     public function testCreateDirectory()
     {
@@ -17,8 +17,10 @@ class FileSystemTest extends PHPUnit_Framework_TestCase
 
     public function testCreateExisting()
     {
-        $this->expectException(\Echron\Tools\Exception\FileAlreadyExistsException::class);
         $testDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'tmp' . gmdate('U') . rand(9999, 99999);
+
+        $this->expectException(\Echron\Tools\Exception\FileAlreadyExistsException::class);
+        $this->expectExceptionMessage('Unable to create directory "' . $testDir . '": directory already exists');
 
         $this->assertFileNotExists($testDir);
         \Echron\Tools\FileSystem::createDir($testDir);
@@ -26,7 +28,7 @@ class FileSystemTest extends PHPUnit_Framework_TestCase
 
         \Echron\Tools\FileSystem::createDir($testDir);
 
-        rmdir($testDir);
+
     }
 
     public function testCreateDirectory_NonExisting()

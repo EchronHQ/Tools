@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tools;
+namespace Echron\Tools;
 
 class ExceptionHelper
 {
@@ -15,7 +15,7 @@ class ExceptionHelper
         $error = error_get_last();
         if ($error !== null) {
             $message = 'Unknown exception';
-            if (isset($error[$message])) {
+            if (isset($error['message'])) {
                 $message = $error['message'];
             }
 
@@ -23,7 +23,7 @@ class ExceptionHelper
             return new \Exception($message);
         }
 
-        return null;
+        return new \Exception(null);
     }
 
     public static function hasLastError():bool

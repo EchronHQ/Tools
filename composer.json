@@ -14,7 +14,7 @@
   },
   "autoload": {
     "psr-0": {
-      "Tools": "src/"
+      "Echron": "src/"
     }
   },
   "require-dev": {

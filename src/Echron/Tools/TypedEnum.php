@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Echron\Tools;
 
-abstract class TypedEnum extends BasicObject
+abstract class TypedEnum
 {
     private static $_instancedValues;
 

@@ -10,7 +10,7 @@ class StringHelper
         return $needle === '' || strrpos($haystack, $needle, -strlen($haystack)) !== false;
     }
 
-    public static function mask(string $target, string $mask = '*', int $showStartCharacters = 2, int $showEndCharacters = 2):string
+    public static function mask(string $target, string $mask = '*', int $showStartCharacters = 0, int $showEndCharacters = 0):string
     {
         $length = strlen($target);
         $masked = str_repeat($mask, $length);
@@ -23,7 +23,23 @@ class StringHelper
         }
 
         if ($length > ($showStartCharacters + $showEndCharacters + 2)) {
-            $masked = substr($target, 0, $showStartCharacters) . '' . substr($masked, $showStartCharacters, -$showEndCharacters) . '' . substr($target, -$showEndCharacters, $showEndCharacters);
+
+            $start = '';
+            if ($showStartCharacters > 0) {
+                $start = substr($target, 0, $showStartCharacters);
+            }
+
+            $end = '';
+
+            if ($showEndCharacters > 0) {
+
+                $end = substr($target, -$showEndCharacters, $showEndCharacters);
+                $masked = substr($masked, $showStartCharacters, -$showEndCharacters);
+            } else {
+                $masked = substr($masked, $showStartCharacters);
+            }
+
+            $masked = $start . $masked . $end;
         }
 
         return $masked;

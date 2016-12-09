@@ -1,6 +1,8 @@
 <?php
 declare(strict_types = 1);
 
+require_once 'TypedEnumImpl.php';
+
 class TypedEnumTest extends PHPUnit_Framework_TestCase
 {
     public function testValue()
@@ -14,8 +16,7 @@ class TypedEnumTest extends PHPUnit_Framework_TestCase
     {
         $enum = TypedEnumImpl::OptionOne();
 
-        $this->assertEquals(1, $enum->getName());
+        $this->assertEquals('OptionOne', $enum->getName());
     }
-
 
 }

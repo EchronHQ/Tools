@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-class FileCreateTest extends PHPUnit_Framework_TestCase
+class FilePutContentTest extends PHPUnit_Framework_TestCase
 {
     public function testPutContent()
     {
@@ -10,7 +10,6 @@ class FileCreateTest extends PHPUnit_Framework_TestCase
         $dummyValue = 'Lorem ipsum';
 
         \Echron\Tools\FileSystem::putFileContent($testFile, $dummyValue);
-
 
         $content = file_get_contents($testFile);
         $this->assertEquals($dummyValue, $content);
@@ -27,12 +26,10 @@ class FileCreateTest extends PHPUnit_Framework_TestCase
 
         \Echron\Tools\FileSystem::putFileContent($testFile, $dummyValue);
 
-
         $content = file_get_contents($testFile);
         $this->assertEquals($dummyValue, $content);
 
         unlink($testFile);
     }
-
 
 }

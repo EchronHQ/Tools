@@ -5,12 +5,12 @@ namespace Echron\Tools;
 
 class StringHelper
 {
-    public static function startsWith(string $haystack, string $needle):bool
+    public static function startsWith(string $haystack, string $needle): bool
     {
         return $needle === '' || strrpos($haystack, $needle, -strlen($haystack)) !== false;
     }
 
-    public static function mask(string $target, string $mask = '*', int $showStartCharacters = 0, int $showEndCharacters = 0):string
+    public static function mask(string $target, string $mask = '*', int $showStartCharacters = 0, int $showEndCharacters = 0): string
     {
         $length = strlen($target);
         $masked = str_repeat($mask, $length);
@@ -43,5 +43,21 @@ class StringHelper
         }
 
         return $masked;
+    }
+
+    public static function generateGuid(): string
+    {
+
+        if (function_exists('com_create_guid')) {
+            return com_create_guid();
+        } else {
+            mt_srand((int)microtime() * 10000);//optional for php 4.2.0 and up.
+            $charid = strtoupper(md5(uniqid((string)rand(), true)));
+            $hyphen = chr(45);// "-"
+            $uuid = chr(123)// "{"
+                . substr($charid, 0, 8) . $hyphen . substr($charid, 8, 4) . $hyphen . substr($charid, 12, 4) . $hyphen . substr($charid, 16, 4) . $hyphen . substr($charid, 20, 12) . chr(125);// "}"
+            return $uuid;
+        }
+
     }
 }

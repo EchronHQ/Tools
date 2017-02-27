@@ -3,12 +3,32 @@ declare(strict_types = 1);
 
 namespace Echron\Tools;
 
-
 class Time
 {
-    function readableSeconds(float $seconds, bool $short = false):string
+    public static function readableSeconds(float $seconds, bool $short = false): string
     {
-        $units = [7 * 24 * 3600 => ['long' => 'week', 'short' => 'w',], 24 * 3600 => ['long' => 'day', 'short' => 'd',], 600 => ['long' => 'hour', 'short' => 'h',], 60 => ['long' => 'minute', 'short' => 'm',], 1 => ['long' => 'second', 'short' => 's',],];
+        $units = [
+            7 * 24 * 3600 => [
+                'long'  => 'week',
+                'short' => 'w',
+            ],
+            24 * 3600     => [
+                'long'  => 'day',
+                'short' => 'd',
+            ],
+            600           => [
+                'long'  => 'hour',
+                'short' => 'h',
+            ],
+            60            => [
+                'long'  => 'minute',
+                'short' => 'm',
+            ],
+            1             => [
+                'long'  => 'second',
+                'short' => 's',
+            ],
+        ];
         // specifically handle zero
         if ($seconds === 0.0) {
 
@@ -60,5 +80,37 @@ class Time
 
         return $s;
 
+    }
+
+    public static function todayInRange($periodStartDate, $periodEndDate, $startTime = 'today 00:00', $endTime = 'today 23:59')
+    {
+
+        $today = gmdate('U', strtotime($startTime));
+        $today_end = gmdate('U', strtotime($endTime));
+
+        $result = false;
+
+        if ($periodStartDate !== null) {
+            $startTime = self::getTime($periodStartDate);
+            $endTime = self::getTime($periodEndDate);
+
+            if (($today >= $startTime && $today <= $endTime) || ($today >= $startTime && is_null($endTime))) {
+                $result = true;
+            }
+        }
+
+        return $result;
+    }
+
+    private static function getTime($input)
+    {
+        if (is_numeric($input)) {
+            return $input;
+        }
+        if (is_string($input)) {
+            return strtotime($input);
+        }
+
+        return null;
     }
 }

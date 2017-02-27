@@ -5,7 +5,7 @@ namespace Echron\Tools;
 
 class Time
 {
-    public static function readableSeconds(float $seconds, bool $short = false): string
+    public static function readableSeconds(float $seconds, bool $short = false, int $precision = 2): string
     {
         $units = [
             7 * 24 * 3600 => [
@@ -56,7 +56,7 @@ class Time
                 }
 
                 if ($divisor === 1 && $quot < 1) {
-                    $quot = number_format($quot, 2);
+                    $quot = number_format($quot, $precision);
                 }
 
                 $s .= $quot . '' . $label;

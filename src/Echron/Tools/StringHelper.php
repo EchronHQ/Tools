@@ -10,6 +10,18 @@ class StringHelper
         return $needle === '' || strrpos($haystack, $needle, -strlen($haystack)) !== false;
     }
 
+    public static function contains(string $hayStack, string $needle, bool $caseSensitive = false): bool
+    {
+        $contains = false;
+        if ($caseSensitive) {
+            $contains = strpos($hayStack, $needle) !== false;
+        } else {
+            $contains = stripos($hayStack, $needle) !== false;
+        }
+
+        return $contains;
+    }
+
     public static function mask(string $target, string $mask = '*', int $showStartCharacters = 0, int $showEndCharacters = 0): string
     {
         $length = strlen($target);

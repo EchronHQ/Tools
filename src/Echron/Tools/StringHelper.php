@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Echron\Tools;
 
@@ -8,6 +8,16 @@ class StringHelper
     public static function startsWith(string $haystack, string $needle): bool
     {
         return $needle === '' || strrpos($haystack, $needle, -strlen($haystack)) !== false;
+    }
+
+    public static function endsWith(string $haystack, string $needle): bool
+    {
+        $length = strlen($needle);
+        if ($length === 0) {
+            return true;
+        }
+
+        return (substr($haystack, -$length) === $needle);
     }
 
     public static function contains(string $hayStack, string $needle, bool $caseSensitive = false): bool

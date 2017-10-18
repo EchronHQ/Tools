@@ -10,11 +10,17 @@ class ReadableTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('0.0000B', $result);
     }
 
-    public function testNegativeDigits()
+    public function testNoDigits()
     {
-        $result = \Echron\Tools\Bytes::readable(302412, -2);
-        $this->assertEquals('200.00B', $result);
+        $result = \Echron\Tools\Bytes::readable(302412, 0);
+        $this->assertEquals('295kB', $result);
     }
+
+//    public function testNegativeDigits()
+//    {
+//        $result = \Echron\Tools\Bytes::readable(302412, -2);
+//        $this->assertEquals('300.00B', $result);
+//    }
 
     public function testOneKilobyte()
     {

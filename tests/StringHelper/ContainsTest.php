@@ -40,6 +40,17 @@ class ContainsTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
+    public function testEquals()
+    {
+        $result = \Echron\Tools\StringHelper::contains('abcdef123', 'abcdef123');
+        $this->assertTrue($result);
+
+        $result = \Echron\Tools\StringHelper::contains('abcdef123', 'aBcdeF123');
+        $this->assertTrue($result);
+    }
+
+ 
+
     //TODO: test case sensitive
     //TODO: test wrong encoding
 

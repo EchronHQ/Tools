@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Echron\Tools;
 
@@ -42,7 +42,7 @@ class FileSystem
 
     }
 
-    public static function isReadable(string $path, bool $clearStatCache = false):bool
+    public static function isReadable(string $path, bool $clearStatCache = false): bool
     {
         if ($clearStatCache) {
             clearstatcache(true, $path);
@@ -51,7 +51,7 @@ class FileSystem
         return is_readable($path);
     }
 
-    public static function isWritable(string $path, bool $clearStatCache = false):bool
+    public static function isWritable(string $path, bool $clearStatCache = false): bool
     {
         if ($clearStatCache) {
             clearstatcache(true, $path);
@@ -60,7 +60,7 @@ class FileSystem
         return is_writable($path);
     }
 
-    public static function dirExists(string $path, bool $clearStatCache = false):bool
+    public static function dirExists(string $path, bool $clearStatCache = false): bool
     {
         if ($clearStatCache) {
             clearstatcache(true, $path);
@@ -69,7 +69,7 @@ class FileSystem
         return file_exists($path) && is_dir($path);
     }
 
-    public static function fileExists(string $path, bool $clearStatCache = false):bool
+    public static function fileExists(string $path, bool $clearStatCache = false): bool
     {
         if ($clearStatCache) {
             clearstatcache(true, $path);
@@ -78,10 +78,11 @@ class FileSystem
         return file_exists($path) && is_file($path);
     }
 
-    public static function putFileContent(string $path, string $content):int
+    public static function putFileContent(string $path, string $content): int
     {
         $exception = null;
         $oldErrorReporting = error_reporting(0);
+        $bytesWritten = 0;
         try {
             $bytesWritten = file_put_contents($path, $content);
             if (!$bytesWritten) {
@@ -99,6 +100,7 @@ class FileSystem
         if ($exception) {
             throw $exception;
         }
+
         return $bytesWritten;
     }
 
@@ -116,7 +118,14 @@ class FileSystem
             if ($accessTime !== null) {
                 $accessTimeInt = $accessTime->getTimestamp();
             }
-            $changed = touch($path, $modificationTimeInt, $accessTimeInt);
+            $changed = false;
+            if (!is_null($modificationTimeInt) && !\is_null($accessTimeInt)) {
+                $changed = touch($path, $modificationTimeInt, $accessTimeInt);
+            } elseif (!is_null($modificationTimeInt)) {
+                $changed = touch($path, $modificationTimeInt);
+            } else {
+                $changed = touch($path);
+            }
             if (!$changed) {
                 if (ExceptionHelper::hasLastError()) {
                     $exception = ExceptionHelper::getLastError();

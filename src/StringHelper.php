@@ -45,7 +45,6 @@ class StringHelper
         }
 
         if ($length > ($showStartCharacters + $showEndCharacters + 2)) {
-
             $start = '';
             if ($showStartCharacters > 0) {
                 $start = substr($target, 0, $showStartCharacters);
@@ -54,7 +53,6 @@ class StringHelper
             $end = '';
 
             if ($showEndCharacters > 0) {
-
                 $end = substr($target, -$showEndCharacters, $showEndCharacters);
                 $masked = substr($masked, $showStartCharacters, -$showEndCharacters);
             } else {
@@ -67,19 +65,44 @@ class StringHelper
         return $masked;
     }
 
+    /**
+     * Generate 128-bit GUID
+     * @return string
+     */
     public static function generateGuid(): string
     {
+        mt_srand((int)microtime() * 10000);//optional for php 4.2.0 and up.
+        $charid = strtoupper(md5(uniqid((string)rand(), true)));
+        $hyphen = chr(45);// "-"
+        $uuid = substr($charid, 0, 8) . $hyphen . substr($charid, 8, 4) . $hyphen . substr($charid, 12, 4) . $hyphen . substr($charid, 16, 4) . $hyphen . substr($charid, 20, 12);// "}"
 
-        if (function_exists('com_create_guid')) {
-            return com_create_guid();
-        } else {
-            mt_srand((int)microtime() * 10000);//optional for php 4.2.0 and up.
-            $charid = strtoupper(md5(uniqid((string)rand(), true)));
-            $hyphen = chr(45);// "-"
-            $uuid = chr(123)// "{"
-                . substr($charid, 0, 8) . $hyphen . substr($charid, 8, 4) . $hyphen . substr($charid, 12, 4) . $hyphen . substr($charid, 16, 4) . $hyphen . substr($charid, 20, 12) . chr(125);// "}"
-            return $uuid;
-        }
+        return $uuid;
+    }
 
+    public static function generateRandom(int $len = 8, string $keySpace = 'A-Za-z0-9', string $salt = 'yourSalt'): string
+    {
+        $hex = md5($salt . uniqid("", true));
+
+        $pack = pack('H*', $hex);
+        $tmp = base64_encode($pack);
+
+        $uid = preg_replace("#(*UTF8)[^" . $keySpace . "]#", "", $tmp);
+
+        $len = max(4, min(128, $len));
+
+        while (strlen($uid) < $len) $uid .= self::generateG(22);
+
+        return substr($uid, 0, $len);
+    }
+
+
+    public static function multiExplode(array $delimiters, string $string): array
+    {
+        $x = '**|-|**';
+
+        $ready = str_replace($delimiters, $x, $string);
+        $launch = explode($x, $ready);
+
+        return $launch;
     }
 }

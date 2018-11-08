@@ -152,5 +152,31 @@ class FileSystem
         }
 
     }
+    /**
+     * @param string $path
+     * @param bool $recursive
+     * @return array
+     * @throws \Exception
+     */
+    public static function listFiles(string $path, bool $recursive = false)
+    {
+        $files = [];
+        if (is_dir($path)) {
+            if ($recursive) {
+                $directoryIterator = new \RecursiveDirectoryIterator($path);
+                $Iterator = new \RecursiveIteratorIterator($directoryIterator);
+
+                /** @var \SplFileInfo $x */
+                foreach ($Iterator as $x) {
+                    $files[] = $x;
+                }
+            } else {
+                throw new \Exception('Not implemented');
+                // $iterator = new \DirectoryIterator($path);
+            }
+        }
+
+        return $files;
+    }
 
 }

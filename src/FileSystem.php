@@ -13,14 +13,12 @@ class FileSystem
         $exception = null;
         $old = error_reporting(0);
         try {
-
             $created = mkdir($path, $mode, $recursive);
             if (!$created) {
                 if (ExceptionHelper::hasLastError()) {
                     $exception = ExceptionHelper::getLastError();
                 }
             }
-
         } catch (\Throwable $ex) {
             $exception = $ex;
         }
@@ -37,9 +35,7 @@ class FileSystem
                 default:
                     throw $exception;
             }
-
         }
-
     }
 
     public static function isReadable(string $path, bool $clearStatCache = false): bool
@@ -106,7 +102,6 @@ class FileSystem
 
     public static function touch(string $path, \DateTime $modificationTime = null, \DateTime $accessTime = null)
     {
-
         $exception = null;
         $old = error_reporting(0);
         try {
@@ -131,7 +126,6 @@ class FileSystem
                     $exception = ExceptionHelper::getLastError();
                 }
             }
-
         } catch (\Throwable $ex) {
             $exception = $ex;
         }
@@ -148,14 +142,13 @@ class FileSystem
                 default:
                     throw $exception;
             }
-
         }
-
     }
+
     /**
      * @param string $path
      * @param bool $recursive
-     * @return array
+     * @return \SplFileInfo[]
      * @throws \Exception
      */
     public static function listFiles(string $path, bool $recursive = false)
@@ -178,5 +171,16 @@ class FileSystem
 
         return $files;
     }
+    public static function joinPath(...$segments): string
+    {
+        $paths = [];
 
+        foreach ($segments as $segment) {
+            if ($segment !== '') {
+                $paths[] = $segment;
+            }
+        }
+
+        return preg_replace('#/+#', \DIRECTORY_SEPARATOR, join(\DIRECTORY_SEPARATOR, $paths));
+    }
 }

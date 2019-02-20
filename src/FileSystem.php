@@ -171,7 +171,7 @@ class FileSystem
 
         return $files;
     }
-    public static function formatPath(...$segments): string
+    public static function joinPath(...$segments): string
     {
         $paths = [];
 

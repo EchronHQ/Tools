@@ -12,12 +12,12 @@ class StringHelper
 
     public static function endsWith(string $haystack, string $needle): bool
     {
-        $length = strlen($needle);
-        if ($length === 0) {
+        $needleLength = strlen($needle);
+        if ($needleLength === 0) {
             return true;
         }
 
-        return (substr($haystack, -$length) === $needle);
+        return (substr($haystack, -$needleLength) === $needle);
     }
 
     public static function contains(string $hayStack, string $needle, bool $caseSensitive = false): bool
@@ -32,8 +32,21 @@ class StringHelper
         return $contains;
     }
 
-    public static function mask(string $target, string $mask = '*', int $showStartCharacters = 0, int $showEndCharacters = 0): string
+    public static function equals(string $input1, string $input2, bool $caseSensitive = false): bool
     {
+        if ($caseSensitive) {
+            return strcmp($input1, $input2) === 0;
+        } else {
+            return strcasecmp($input1, $input2) === 0;
+        }
+    }
+
+    public static function mask(
+        string $target,
+        string $mask = '*',
+        int $showStartCharacters = 0,
+        int $showEndCharacters = 0
+    ): string {
         $length = strlen($target);
         $masked = str_repeat($mask, $length);
 
@@ -79,8 +92,11 @@ class StringHelper
         return $uuid;
     }
 
-    public static function generateRandom(int $len = 8, string $keySpace = 'A-Za-z0-9', string $salt = 'yourSalt'): string
-    {
+    public static function generateRandom(
+        int $len = 8,
+        string $keySpace = 'A-Za-z0-9',
+        string $salt = 'yourSalt'
+    ): string {
         $hex = md5($salt . uniqid("", true));
 
         $pack = pack('H*', $hex);
@@ -94,7 +110,6 @@ class StringHelper
 
         return substr($uid, 0, $len);
     }
-
 
     public static function multiExplode(array $delimiters, string $string): array
     {

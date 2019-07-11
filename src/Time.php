@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Echron\Tools;
 
@@ -8,30 +8,29 @@ class Time
     public static function readableSeconds(float $seconds, bool $short = false, int $precision = 2): string
     {
         $units = [
-            7 * 24 * 3600 => [
+            7 * 24 * 60 * 60 => [
                 'long'  => 'week',
                 'short' => 'w',
             ],
-            24 * 3600     => [
+            24 * 60 * 60     => [
                 'long'  => 'day',
                 'short' => 'd',
             ],
-            600           => [
+            60 * 60          => [
                 'long'  => 'hour',
                 'short' => 'h',
             ],
-            60            => [
+            60               => [
                 'long'  => 'minute',
                 'short' => 'm',
             ],
-            1             => [
+            1                => [
                 'long'  => 'second',
                 'short' => 's',
             ],
         ];
         // specifically handle zero
         if ($seconds === 0.0) {
-
             if ($short) {
                 return '0s';
             } else {
@@ -40,7 +39,6 @@ class Time
         }
         $s = '';
         foreach ($units as $divisor => $data) {
-            //echo $seconds . ' ' . $divisor . PHP_EOL;
             if ($divisor !== 1) {
                 $quot = intval($seconds / $divisor);
             } else {
@@ -79,12 +77,14 @@ class Time
         }
 
         return $s;
-
     }
 
-    public static function todayInRange($periodStartDate, $periodEndDate, $startTime = 'today 00:00', $endTime = 'today 23:59')
-    {
-
+    public static function todayInRange(
+        $periodStartDate,
+        $periodEndDate,
+        $startTime = 'today 00:00',
+        $endTime = 'today 23:59'
+    ) {
         $today = gmdate('U', strtotime($startTime));
         $today_end = gmdate('U', strtotime($endTime));
 

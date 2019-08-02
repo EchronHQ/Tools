@@ -68,11 +68,11 @@ class Normalizer
 
         $id = preg_replace($regex, '_', $id);
 
-//        if (strlen($id) < 1) {
-//            $ex = new InvalidKeyException('Id must be longer than 1 character');
-//            echo $ex->getTraceAsString();
-//            throw $ex;
-//        }
+        //        if (strlen($id) < 1) {
+        //            $ex = new InvalidKeyException('Id must be longer than 1 character');
+        //            echo $ex->getTraceAsString();
+        //            throw $ex;
+        //        }
 
         $id = strtolower($id);
 
@@ -88,5 +88,16 @@ class Normalizer
         //        $code = str_replace(' ', '_', $code);
 
         return $id;
+    }
+
+    public static function normalizeCollection(array $codes, NormalizeConfig $keyFormatConfig = null): array
+    {
+        $result = [];
+
+        foreach ($codes as $code) {
+            $result[] = self::normalize($code, $keyFormatConfig);
+        }
+
+        return $result;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-class MaskTest extends PHPUnit_Framework_TestCase
+class MaskTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testNormal()

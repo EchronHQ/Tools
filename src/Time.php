@@ -82,24 +82,42 @@ class Time
     public static function todayInRange(
         $periodStartDate,
         $periodEndDate,
-        $startTime = 'today 00:00',
-        $endTime = 'today 23:59'
-    ) {
-        $today = gmdate('U', strtotime($startTime));
-        $today_end = gmdate('U', strtotime($endTime));
+        string $startTime = 'today 00:00',
+        string $endTime = 'today 23:59'
+    ): bool {
+        $todayStart = gmdate('U', strtotime($startTime));
+        $todayEnd = gmdate('U', strtotime($endTime));
 
         $result = false;
-
-        if ($periodStartDate !== null) {
+        if (!\is_null($periodStartDate)) {
             $startTime = self::getTime($periodStartDate);
             $endTime = self::getTime($periodEndDate);
 
-            if (($today >= $startTime && $today <= $endTime) || ($today >= $startTime && is_null($endTime))) {
+            if (($todayStart >= $startTime && $todayStart <= $endTime) || ($todayStart >= $startTime && is_null($endTime))) {
                 $result = true;
             }
         }
 
         return $result;
+    }
+
+    public static function isInPeriod(\DateTime $from, \DateTime $to = null, \DateTime $input = null): bool
+    {
+        if (\is_null($input)) {
+            $input = new \DateTime();
+        }
+        //Reverse 'to' & 'from' when 'to' is earlier than 'from''
+        if (!is_null($to) && $from > $to) {
+            $tmp = $from;
+            $from = $to;
+            $to = $tmp;
+        }
+
+        if (($input >= $from && $input <= $to) || ($input >= $from && is_null($to))) {
+            return true;
+        }
+
+        return false;
     }
 
     private static function getTime($input)

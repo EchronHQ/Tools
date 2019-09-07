@@ -1,7 +1,7 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
-class FileCreateTest extends PHPUnit_Framework_TestCase
+class FileCreateTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreateDirectory()
     {
@@ -27,15 +27,13 @@ class FileCreateTest extends PHPUnit_Framework_TestCase
         $this->assertFileExists($testDir);
 
         \Echron\Tools\FileSystem::createDir($testDir);
-
-
     }
 
     public function testCreateDirectory_NonExisting()
     {
         $this->expectException(Exception::class);
         //TODO: find better way to get unexisting directory
-        $testDir = 'X:tmp' . gmdate('U') . rand(9999, 99999);
+        $testDir = 'X:\tmp' . gmdate('U') . rand(9999, 99999);
         \Echron\Tools\FileSystem::createDir($testDir);
     }
 
@@ -43,7 +41,7 @@ class FileCreateTest extends PHPUnit_Framework_TestCase
     {
         $this->expectException(Exception::class);
         //TODO: find better way to get directory without rights
-        $testDir = 'X:tmp' . gmdate('U') . rand(9999, 99999);
+        $testDir = 'X:\tmp' . gmdate('U') . rand(9999, 99999);
         \Echron\Tools\FileSystem::createDir($testDir);
     }
 }

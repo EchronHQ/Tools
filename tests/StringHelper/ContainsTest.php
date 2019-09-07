@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-class ContainsTest extends PHPUnit_Framework_TestCase
+class ContainsTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testNot()
@@ -49,7 +49,7 @@ class ContainsTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
- 
+
 
     //TODO: test case sensitive
     //TODO: test wrong encoding

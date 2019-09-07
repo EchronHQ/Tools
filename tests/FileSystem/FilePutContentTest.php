@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-class FilePutContentTest extends PHPUnit_Framework_TestCase
+class FilePutContentTest extends \PHPUnit\Framework\TestCase
 {
     public function testPutContent()
     {

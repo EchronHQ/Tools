@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+
+
 class VarHelperTest extends \PHPUnit\Framework\TestCase
 {
     public function testInteger()

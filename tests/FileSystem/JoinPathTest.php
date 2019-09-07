@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-class JoinPathTest extends PHPUnit_Framework_TestCase
+class JoinPathTest extends \PHPUnit\Framework\TestCase
 {
     public function test()
     {

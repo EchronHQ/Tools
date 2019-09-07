@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-class InRangeTest extends PHPUnit_Framework_TestCase
+class InRangeTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testFrom()

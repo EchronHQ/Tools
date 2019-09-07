@@ -6,7 +6,9 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Stijn Duynslaeger"
+      "name": "Stijn Duynslaeger",
+      "email": "stijn@echron.be",
+      "homepage": "https://echron.be",
     }
   ],
   "require": {
@@ -18,6 +20,6 @@
     }
   },
   "require-dev": {
-    "phpunit/phpunit": "5.*"
+    "phpunit/phpunit": "8.*"
   }
 }

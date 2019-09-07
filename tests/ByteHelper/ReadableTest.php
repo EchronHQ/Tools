@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-class ReadableTest extends PHPUnit_Framework_TestCase
+class ReadableTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testZero()

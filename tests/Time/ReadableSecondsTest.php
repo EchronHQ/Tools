@@ -10,7 +10,7 @@ class ReadableSecondsTest extends \PHPUnit\Framework\TestCase
 
         $result = \Echron\Tools\Time::readableSeconds($seconds);
 
-        echo $result;
+        $this->assertEquals('3 hours', $result);
     }
 
 }

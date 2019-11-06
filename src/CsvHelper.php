@@ -8,7 +8,9 @@ class CsvHelper
 
     public static function parseCSVFile(
         string $filePath,
-        string $delimiter = ';'
+        string $lineDelimiter = \PHP_EOL,
+        string $delimiter = ';',
+        array $headers = null
     ): array {
         if (!\file_exists($filePath)) {
             throw new \Exception('Unable to get FileMaker products: CSV file "' . $filePath . '" does not exist');
@@ -18,14 +20,9 @@ class CsvHelper
 
         $result = [];
 
-        $headers = null;
         $row = 1;
 
-        $fileData = \str_replace([
-            "\r\n",
-            "\r",
-        ], \PHP_EOL, $fileData);
-        $lines = \str_getcsv($fileData, \PHP_EOL);
+        $lines = \str_getcsv($fileData, $lineDelimiter);
 
         foreach ($lines as $line) {
             $lineData = \str_getcsv($line, $delimiter);
@@ -34,7 +31,6 @@ class CsvHelper
                 $headers = $lineData;
             } else {
                 $num = count($lineData);
-                //                    echo "<p> $num fields in line $row: <br /></p>\n";
                 $row++;
 
                 $productData = [];
@@ -45,39 +41,10 @@ class CsvHelper
                     }
 
                     $productData[$field] = $lineData[$c];
-                    //                        echo $field . ': ' . $data[$c] . \PHP_EOL;
                 }
 
                 $result[] = $productData;
             }
-        }
-
-        return $result;
-
-        if (($handle = fopen($filePath, "r")) !== false) {
-            while (($lineData = fgetcsv($handle, 4096, $delimiter)) !== false) {
-                if (\is_null($headers)) {
-                    $headers = $lineData;
-                } else {
-                    $num = count($lineData);
-                    //                    echo "<p> $num fields in line $row: <br /></p>\n";
-                    $row++;
-
-                    $productData = [];
-                    for ($c = 0; $c < $num; $c++) {
-                        $field = '[unknown ' . $c . ']';
-                        if (isset($headers[$c])) {
-                            $field = $headers[$c];
-                        }
-
-                        $productData[$field] = $lineData[$c];
-                        //                        echo $field . ': ' . $data[$c] . \PHP_EOL;
-                    }
-
-                    $result[] = $productData;
-                }
-            }
-            fclose($handle);
         }
 
         return $result;

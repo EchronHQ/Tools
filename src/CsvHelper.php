@@ -8,7 +8,9 @@ class CsvHelper
 
     public static function parseCSVFile(
         string $filePath,
-        string $delimiter = ';'
+        string $lineDelimiter = \PHP_EOL,
+        string $delimiter = ';',
+        array $headers = null
     ): array {
         if (!\file_exists($filePath)) {
             throw new \Exception('Unable to get FileMaker products: CSV file "' . $filePath . '" does not exist');
@@ -18,17 +20,33 @@ class CsvHelper
 
         $result = [];
 
-        $headers = null;
+        // $headers = null;
         $row = 1;
 
-        $fileData = \str_replace([
-            "\r\n",
-            "\r",
-        ], \PHP_EOL, $fileData);
-        $lines = \str_getcsv($fileData, \PHP_EOL);
+        //        $fileData = \str_replace([
+        //            "\r\n",
+        //            //                    "\r",
+        //        ], \PHP_EOL, $fileData);
+
+        //        $fileData = \str_replace([
+        //            //            "\r\n",
+        //            "\r",
+        //        ], \PHP_EOL, $fileData);
+        $lines = \str_getcsv($fileData, $lineDelimiter);
+
+        //        foreach ($lines as $line) {
+        //            var_dump($line);
+        //        }
+        //        die('---');
+
+        // return [];
 
         foreach ($lines as $line) {
             $lineData = \str_getcsv($line, $delimiter);
+
+            //            var_dump($lineData);
+            //            var_dump($line);
+            //            die('---');
 
             if (\is_null($headers)) {
                 $headers = $lineData;
@@ -53,6 +71,8 @@ class CsvHelper
         }
 
         return $result;
+        var_dump($result);
+        die('---');
 
         if (($handle = fopen($filePath, "r")) !== false) {
             while (($lineData = fgetcsv($handle, 4096, $delimiter)) !== false) {

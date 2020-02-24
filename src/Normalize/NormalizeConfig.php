@@ -9,6 +9,7 @@ class NormalizeConfig
     private $allowDash = false;
     private $allowDot = false;
     private $allowPlus = false;
+    private $allowCases = false;
     private $maxLength = -1;
 
     public function __construct()
@@ -64,4 +65,15 @@ class NormalizeConfig
     {
         $this->allowDot = $allowDot;
     }
+
+    public function isCasesAllowed(): bool
+    {
+        return $this->allowCases;
+    }
+
+    public function setIsCasesAllowed(bool $allowCases)
+    {
+        $this->allowCases = $allowCases;
+    }
 }
+

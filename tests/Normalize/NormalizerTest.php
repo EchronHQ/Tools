@@ -132,7 +132,6 @@ class NormalizerTest extends \PHPUnit\Framework\TestCase
 
         $formattedKey = \Echron\Tools\Normalize\Normalizer::normalize('a Τάχιστη b αλώπηξ c βαφής d ψημένη e γη, f δρασκελίζει g υπέρ h νωθρού i κυνός');
         $this->assertEquals('a_b_c_d_e_f_g_h_i', $formattedKey);
-
     }
 
     public function testFormatKey_numbers()
@@ -141,7 +140,7 @@ class NormalizerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('123', $formattedKey);
 
         $formattedKey = \Echron\Tools\Normalize\Normalizer::normalize('0123');
-        $this->assertEquals('123', $formattedKey);
+        $this->assertEquals('0123', $formattedKey);
 
         $formattedKey = \Echron\Tools\Normalize\Normalizer::normalize('3210');
         $this->assertEquals('3210', $formattedKey);
@@ -149,10 +148,8 @@ class NormalizerTest extends \PHPUnit\Framework\TestCase
 
     public function testFormatKey_unwanted()
     {
-
         $formattedKey = \Echron\Tools\Normalize\Normalizer::normalize('test�test');
         $this->assertEquals('test_test', $formattedKey);
-
     }
 
     public function testFormatKey_MaxLength()
@@ -174,6 +171,29 @@ class NormalizerTest extends \PHPUnit\Framework\TestCase
         $formattedKey = \Echron\Tools\Normalize\Normalizer::normalize('Shortid', $keyFormatConfig);
         $this->assertEquals($formattedKey, 'shortid');
         $this->assertEquals(7, strlen($formattedKey));
+    }
 
+    public function testFormatKey_Casing()
+    {
+        $keyFormatConfig = new \Echron\Tools\Normalize\NormalizeConfig();
+
+        $formattedKey = \Echron\Tools\Normalize\Normalizer::normalize('aBC', $keyFormatConfig);
+        $this->assertEquals($formattedKey, 'abc');
+
+        $formattedKey = \Echron\Tools\Normalize\Normalizer::normalize('ABC', $keyFormatConfig);
+        $this->assertEquals($formattedKey, 'abc');
+
+        $formattedKey = \Echron\Tools\Normalize\Normalizer::normalize('abc', $keyFormatConfig);
+        $this->assertEquals($formattedKey, 'abc');
+
+        $keyFormatConfig->setIsCasesAllowed(true);
+        $formattedKey = \Echron\Tools\Normalize\Normalizer::normalize('aBC', $keyFormatConfig);
+        $this->assertEquals($formattedKey, 'aBC');
+
+        $formattedKey = \Echron\Tools\Normalize\Normalizer::normalize('ABC', $keyFormatConfig);
+        $this->assertEquals($formattedKey, 'ABC');
+
+        $formattedKey = \Echron\Tools\Normalize\Normalizer::normalize('abc', $keyFormatConfig);
+        $this->assertEquals($formattedKey, 'abc');
     }
 }

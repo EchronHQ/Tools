@@ -74,7 +74,9 @@ class Normalizer
         //            throw $ex;
         //        }
 
-        $id = strtolower($id);
+        if (!$keyFormatConfig->isCasesAllowed()) {
+            $id = strtolower($id);
+        }
 
         if ($keyFormatConfig->getMaxLength() > 0) {
             $id = substr($id, 0, $keyFormatConfig->getMaxLength());

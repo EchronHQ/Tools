@@ -133,12 +133,12 @@ class FileSystem
 
         if ($exception !== null) {
             switch ($exception->getMessage()) {
-//                case 'mkdir(): Permissions denied':
-//                    throw new PermissionsDeniedException('Unable to create directory "' . $path . '": permissions denied');
-//                    break;
-//                case 'mkdir(): File exists':
-//                    throw new FileAlreadyExistsException('Unable to create directory "' . $path . '": directory already exists');
-//                    break;
+                //                case 'mkdir(): Permissions denied':
+                //                    throw new PermissionsDeniedException('Unable to create directory "' . $path . '": permissions denied');
+                //                    break;
+                //                case 'mkdir(): File exists':
+                //                    throw new FileAlreadyExistsException('Unable to create directory "' . $path . '": directory already exists');
+                //                    break;
                 default:
                     throw $exception;
             }
@@ -171,6 +171,7 @@ class FileSystem
 
         return $files;
     }
+
     public static function joinPath(...$segments): string
     {
         $paths = [];
@@ -182,5 +183,34 @@ class FileSystem
         }
 
         return preg_replace('#/+#', \DIRECTORY_SEPARATOR, join(\DIRECTORY_SEPARATOR, $paths));
+    }
+
+    public static function copyDirectory(string $source, string $destination, bool $recursive = false)
+    {
+        // open the source directory
+        $dir = opendir($source);
+        if ($dir === false) {
+            throw new \Exception('Unable to read source directory');
+        }
+
+        // Make the destination directory if not exist
+        self::createDir($destination);
+
+        // Loop through the files in source directory
+        while (false !== ($file = readdir($dir))) {
+            if (($file != '.') && ($file != '..')) {
+                if (is_dir($source . \DIRECTORY_SEPARATOR . $file)) {
+                    // Recursively calling custom copy function
+                    // for sub directory
+                    if ($recursive) {
+                        self::copyDirectory($source . \DIRECTORY_SEPARATOR . $file, $destination . \DIRECTORY_SEPARATOR . $file);
+                    }
+                } else {
+                    copy($source . \DIRECTORY_SEPARATOR . $file, $destination . \DIRECTORY_SEPARATOR . $file);
+                }
+            }
+        }
+
+        closedir($dir);
     }
 }

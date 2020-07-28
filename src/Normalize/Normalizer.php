@@ -56,7 +56,24 @@ class Normalizer
             $allowedChars[] = '\+';
             $notAllowed[] = '(\+{2,})';
         }
-
+        if ($keyFormatConfig->isAllowExtended()) {
+            $characters = [
+                '(',
+                ')',
+                '\\',
+                '{',
+                '}',
+                '*',
+                '#',
+                '[',
+                ']',
+                '=',
+            ];
+            foreach ($characters as $character) {
+                $allowedChars[] = '\\' . $character;
+                $notAllowed[] = '(\\' . $character . '{2,})';
+            }
+        }
         $regex = '/([^' . implode('', $allowedChars) . ']+)|' . implode('|', $notAllowed) . '/mi';
 
         //        if ($allowWhiteSpace) {

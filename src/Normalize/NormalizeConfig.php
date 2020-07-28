@@ -10,10 +10,21 @@ class NormalizeConfig
     private $allowDot = false;
     private $allowPlus = false;
     private $allowCases = false;
+    private $allowExtended = false;
     private $maxLength = -1;
 
     public function __construct()
     {
+    }
+
+    public function isAllowExtended(): bool
+    {
+        return $this->allowExtended;
+    }
+
+    public function setAllowExtended(bool $allowExtended)
+    {
+        $this->allowExtended = $allowExtended;
     }
 
     public function isAllowPlus(): bool

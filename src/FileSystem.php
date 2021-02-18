@@ -213,4 +213,36 @@ class FileSystem
 
         closedir($dir);
     }
+
+    public static function getFileModificationTime(string $fileName): int
+    {
+        $exception = null;
+        $old = error_reporting(0);
+        try {
+            $time = \filemtime($fileName);
+            if ($time === false) {
+                if (ExceptionHelper::hasLastError()) {
+                    $exception = ExceptionHelper::getLastError();
+                }
+            }
+        } catch (\Throwable $ex) {
+            $exception = $ex;
+        }
+        error_reporting($old);
+
+        if ($exception !== null) {
+//            switch ($exception->getMessage()) {
+//                case 'mkdir(): Permissions denied':
+//                    throw new PermissionsDeniedException('Unable to create directory "' . $path . '": permissions denied');
+//                    break;
+//                case 'mkdir(): File exists':
+//                    throw new FileAlreadyExistsException('Unable to create directory "' . $path . '": directory already exists');
+//                    break;
+//                default:
+            throw $exception;
+//            }
+        }
+
+        return $time;
+    }
 }

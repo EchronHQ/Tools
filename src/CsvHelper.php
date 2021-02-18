@@ -35,9 +35,11 @@ class CsvHelper
 
                 $productData = [];
                 for ($c = 0; $c < $num; $c++) {
-                    $field = '[unknown ' . $c . ']';
+                    $field = $c;
                     if (isset($headers[$c])) {
                         $field = $headers[$c];
+                    } else {
+                        // TODO: should we log this?
                     }
 
                     $productData[$field] = $lineData[$c];

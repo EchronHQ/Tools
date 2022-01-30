@@ -7,7 +7,7 @@ class FileCreateTest extends \PHPUnit\Framework\TestCase
     {
         $testDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'tmp' . gmdate('U') . rand(9999, 99999);
 
-        $this->assertFileNotExists($testDir);
+        $this->assertFileDoesNotExist($testDir);
         \Echron\Tools\FileSystem::createDir($testDir);
 
         $this->assertFileExists($testDir);
@@ -22,7 +22,7 @@ class FileCreateTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\Echron\Tools\Exception\FileAlreadyExistsException::class);
         $this->expectExceptionMessage('Unable to create directory "' . $testDir . '": directory already exists');
 
-        $this->assertFileNotExists($testDir);
+        $this->assertFileDoesNotExist($testDir);
         \Echron\Tools\FileSystem::createDir($testDir);
         $this->assertFileExists($testDir);
 
@@ -33,7 +33,7 @@ class FileCreateTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectException(Exception::class);
         //TODO: find better way to get unexisting directory
-        $testDir = 'X:\tmp' . gmdate('U') . rand(9999, 99999);
+        $testDir = 'X:\\tmp' . gmdate('U') . rand(9999, 99999);
         \Echron\Tools\FileSystem::createDir($testDir);
     }
 
@@ -41,7 +41,7 @@ class FileCreateTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectException(Exception::class);
         //TODO: find better way to get directory without rights
-        $testDir = 'X:\tmp' . gmdate('U') . rand(9999, 99999);
+        $testDir = 'X:\\tmp' . gmdate('U') . rand(9999, 99999);
         \Echron\Tools\FileSystem::createDir($testDir);
     }
 }

@@ -7,6 +7,7 @@ class Normalizer
 {
     public static function normalize(string $code, NormalizeConfig $keyFormatConfig = null): string
     {
+        // TODO: this is quite a slow function and called loads of times
         if ($keyFormatConfig === null) {
             $keyFormatConfig = new NormalizeConfig();
         }
@@ -29,7 +30,7 @@ class Normalizer
 
         ], $code);
         //Remove special characters (http://regexr.com/3cpha)
-        //Don't use \w as character groop, it will allow special non utf-8 characters
+        //Don't use \w as character group, it will allow special non utf-8 characters
 
         $allowedChars = [
             'a-z',
@@ -100,13 +101,13 @@ class Normalizer
         }
 
         //Remove leading or trailing slashes
-        $id = trim($id, '_');
+        return trim($id, '_');
         //Remove multi underscores
         //        $code = preg_replace('!\s+!', ' ', $code);
         //        $code = trim($code);
         //        $code = str_replace(' ', '_', $code);
 
-        return $id;
+        //return $id;
     }
 
     public static function normalizeCollection(array $codes, NormalizeConfig $keyFormatConfig = null): array

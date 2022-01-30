@@ -14,9 +14,8 @@ class Memory
     {
         $memory_limit = ini_get('memory_limit');
 
-        $memory_limit = self::parseMemoryString($memory_limit);
+        return self::parseMemoryString($memory_limit);
 
-        return $memory_limit;
 
     }
 

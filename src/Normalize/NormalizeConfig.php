@@ -5,13 +5,13 @@ namespace Echron\Tools\Normalize;
 
 class NormalizeConfig
 {
-    private $allowSlash = false;
-    private $allowDash = false;
-    private $allowDot = false;
-    private $allowPlus = false;
-    private $allowCases = false;
-    private $allowExtended = false;
-    private $maxLength = -1;
+    private bool $allowSlash = false;
+    private bool $allowDash = false;
+    private bool $allowDot = false;
+    private bool $allowPlus = false;
+    private bool $allowCases = false;
+    private bool $allowExtended = false;
+    private int $maxLength = -1;
 
     public function __construct()
     {

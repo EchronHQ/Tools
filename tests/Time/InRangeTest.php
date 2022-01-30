@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 class InRangeTest extends \PHPUnit\Framework\TestCase
 {
@@ -58,12 +58,30 @@ class InRangeTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($result);
     }
 
-//    public function testFrom7()
-//    {
-//        $from = strtotime('today 12:00');
-//        $to = strtotime('today 23:59');
-//
-//        $result = \Echron\Tools\Time::todayInRange($from, $to);
-//        $this->assertTrue($result);
-//    }
+    public function testFrom7()
+    {
+        $from = null;
+        $to = null;
+
+        $result = \Echron\Tools\Time::todayInRange($from, $to);
+        $this->assertTrue($result);
+    }
+
+    public function testFrom8()
+    {
+        $from = null;
+        $to = strtotime('today 23:59');
+
+        $result = \Echron\Tools\Time::todayInRange($from, $to);
+        $this->assertTrue($result);
+    }
+
+    //    public function testFrom7()
+    //    {
+    //        $from = strtotime('today 12:00');
+    //        $to = strtotime('today 23:59');
+    //
+    //        $result = \Echron\Tools\Time::todayInRange($from, $to);
+    //        $this->assertTrue($result);
+    //    }
 }

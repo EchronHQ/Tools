@@ -10,15 +10,18 @@ class CsvHelper
         string $filePath,
         string $lineDelimiter = \PHP_EOL,
         string $delimiter = ';',
-        array $headers = null
-    ): array {
+        array  $headers = null
+    ): array
+    {
+        // TODO: method uses a lot of memory when reading large CSV files, is there a way to reduce this?
         if (!\file_exists($filePath)) {
             throw new \Exception('Unable to get FileMaker products: CSV file "' . $filePath . '" does not exist');
         }
+        $result = [];
+
 
         $fileData = file_get_contents($filePath);
 
-        $result = [];
 
         $row = 1;
 
@@ -48,6 +51,9 @@ class CsvHelper
                 $result[] = $productData;
             }
         }
+
+        unset($fileData);
+        unset($lines);
 
         return $result;
     }

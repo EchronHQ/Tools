@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Echron\Tools;
 
@@ -9,7 +9,7 @@ class ExceptionHelper
      * @return \Exception
      * http://php.net/manual/en/function.error-get-last.php
      */
-    public static function getLastError():\Exception
+    public static function getLastError(): \Exception
     {
 
         $error = error_get_last();
@@ -26,7 +26,7 @@ class ExceptionHelper
         return new \Exception(null);
     }
 
-    public static function hasLastError():bool
+    public static function hasLastError(): bool
     {
         $error = error_get_last();
 

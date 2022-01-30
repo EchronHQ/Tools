@@ -15,7 +15,6 @@ class XmlHelper
         $xml = simplexml_load_string($xmlString, \SimpleXMLElement::class, LIBXML_NOCDATA);
 
         if ($xml === false) {
-            /** @var \LibXMLError $error */
             foreach (libxml_get_errors() as $error) {
                 throw new \Exception($error->message);
             }
@@ -31,9 +30,8 @@ class XmlHelper
     {
         //Temp fix
         $xml = str_replace("\x01", "", $xml);
-        $xml = str_replace("\x02", "", $xml);
+        return str_replace("\x02", "", $xml);
 
-        return $xml;
     }
 
     public static function parseAndValidateStringToSimpleXml(string $xmlString, string $xsdFilePath): \SimpleXMLElement
@@ -46,11 +44,10 @@ class XmlHelper
         $xmlDom = new \DOMDocument();
         $xmlLoaded = $xmlDom->loadXML($xmlString);
         if (!$xmlLoaded) {
-            /** @var \LibXMLError $error */
             foreach (libxml_get_errors() as $error) {
-                $ex = new \Exception($error->message, $error->code);
+                return new \Exception($error->message, $error->code);
 
-                throw $ex;
+
             }
             libxml_clear_errors();
         }
@@ -65,12 +62,12 @@ class XmlHelper
                 throw new \Exception($error->message);
             }
         }
-        $xml = simplexml_import_dom($xmlDom);
+        return simplexml_import_dom($xmlDom);
 
-        return $xml;
+
     }
 
-    private static function _validateConfigFile(\DOMDocument $xmlDom, $xsdFilePath)
+    private static function _validateConfigFile(\DOMDocument $xmlDom, $xsdFilePath): array
     {
         libxml_use_internal_errors(true);
         $errors = [];
@@ -103,12 +100,11 @@ class XmlHelper
             FileSystem::createDir($dir);
         }
 
-        $domxml = new \DOMDocument('1.0');
-        $domxml->preserveWhiteSpace = false;
-        $domxml->formatOutput = true;
-        /* @var $xml \SimpleXMLElement */
-        $domxml->loadXML($xml->asXML());
-        $saved = $domxml->save($destination);
+        $domXml = new \DOMDocument('1.0');
+        $domXml->preserveWhiteSpace = false;
+        $domXml->formatOutput = true;
+        $domXml->loadXML($xml->asXML());
+        $saved = $domXml->save($destination);
 
         if ($saved === false) {
 

@@ -196,4 +196,16 @@ class NormalizerTest extends \PHPUnit\Framework\TestCase
         $formattedKey = \Echron\Tools\Normalize\Normalizer::normalize('abc', $keyFormatConfig);
         $this->assertEquals($formattedKey, 'abc');
     }
+
+    public function testFormatKey_extended()
+    {
+        $keyFormatConfig = new \Echron\Tools\Normalize\NormalizeConfig();
+        $keyFormatConfig->setAllowExtended(true);
+        $keyFormatConfig->setAllowSlash(true);
+        $keyFormatConfig->setAllowPlus(true);
+        $keyFormatConfig->setAllowDot(true);
+        $keyFormatConfig->setAllowDash(true);
+        $formattedKey = \Echron\Tools\Normalize\Normalizer::normalize('a+b/c\d(e)f{g}h*i#j[k]l=m.n_o-p', $keyFormatConfig);
+        $this->assertEquals($formattedKey, 'a+b/c\d(e)f{g}h*i#j[k]l=m.n_o-p');
+    }
 }

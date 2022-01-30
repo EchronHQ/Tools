@@ -49,4 +49,20 @@ class ArrayHelper
 
         return \array_unique($result);
     }
+
+    public static function hasDuplicates(array $array): bool
+    {
+        return count($array) > count(array_unique($array, SORT_REGULAR));
+        // Flip can only be used on string and integer values
+//        return count($array) === count(array_flip($array));
+//        // TODO: implement objects
+//        $dupe_array = [];
+//        foreach ($array as $val) {
+//            if (++$dupe_array[$val] > 1) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+    }
 }

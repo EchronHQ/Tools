@@ -84,11 +84,17 @@ class Time
         $periodEndDate,
         string $startTime = 'today 00:00',
         string $endTime = 'today 23:59'
-    ): bool {
+    ): bool
+    {
         $todayStart = gmdate('U', strtotime($startTime));
         $todayEnd = gmdate('U', strtotime($endTime));
 
         $result = false;
+
+        if (\is_null($periodStartDate)) {
+            $periodStartDate = gmdate('U', strtotime('yesterday'));
+        }
+
         if (!\is_null($periodStartDate)) {
             $startTime = self::getTime($periodStartDate);
             $endTime = self::getTime($periodEndDate);

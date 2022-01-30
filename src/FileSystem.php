@@ -17,6 +17,8 @@ class FileSystem
             if (!$created) {
                 if (ExceptionHelper::hasLastError()) {
                     $exception = ExceptionHelper::getLastError();
+                } else {
+                    $exception = new \Exception('Unable to create directory');
                 }
             }
         } catch (\Throwable $ex) {
@@ -28,10 +30,10 @@ class FileSystem
             switch ($exception->getMessage()) {
                 case 'mkdir(): Permissions denied':
                     throw new PermissionsDeniedException('Unable to create directory "' . $path . '": permissions denied');
-                    break;
+
                 case 'mkdir(): File exists':
                     throw new FileAlreadyExistsException('Unable to create directory "' . $path . '": directory already exists');
-                    break;
+
                 default:
                     throw $exception;
             }
@@ -85,7 +87,7 @@ class FileSystem
                 if (ExceptionHelper::hasLastError()) {
                     $exception = ExceptionHelper::getLastError();
                 } else {
-                    $exception = new \Exception('Unknown exception while adding file content to file ' . $path . '');
+                    $exception = new \Exception('Unknown exception while adding file content to file ' . $path );
                 }
             }
         } catch (\Exception $ex) {
@@ -151,7 +153,7 @@ class FileSystem
      * @return \SplFileInfo[]
      * @throws \Exception
      */
-    public static function listFiles(string $path, bool $recursive = false)
+    public static function listFiles(string $path, bool $recursive = false): array
     {
         $files = [];
         if (is_dir($path)) {

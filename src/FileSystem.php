@@ -10,6 +10,9 @@ class FileSystem
 {
     public static function createDir(string $path, bool $recursive = true, $mode = 0777)
     {
+        if (self::dirExists($path)) {
+            return;
+        }
         $exception = null;
         $old = error_reporting(0);
         try {
@@ -87,7 +90,7 @@ class FileSystem
                 if (ExceptionHelper::hasLastError()) {
                     $exception = ExceptionHelper::getLastError();
                 } else {
-                    $exception = new \Exception('Unknown exception while adding file content to file ' . $path );
+                    $exception = new \Exception('Unknown exception while adding file content to file ' . $path);
                 }
             }
         } catch (\Exception $ex) {

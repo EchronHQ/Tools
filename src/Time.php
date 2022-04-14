@@ -52,19 +52,20 @@ class Time
                 } else {
                     $label = ' ' . $data['long'];
                 }
-
-                if ($divisor === 1 && $quot < 1) {
-                    $quot = number_format($quot, $precision);
+                $sQuot = $quot;
+                if ($divisor === 1 && $quot < 1.0) {
+                    $sQuot = number_format($quot, $precision);
                 }
 
-                $s .= $quot . '' . $label;
+
+                $s .= $sQuot . '' . $label;
                 if (!$short) {
                     $s .= (abs($quot) === 1 ? '' : 's') . ', ';
                 } else {
                     $s .= ' ';
                 }
 
-                $seconds -= $quot * $divisor;
+                $seconds -= $sQuot * $divisor;
             }
         }
 

@@ -6,9 +6,17 @@ namespace Echron\Tools\Normalize;
 class NormalizeConfig
 {
     private bool $allowSlash = false;
+    public int $allowConsecutiveSlashes = 0;
+
     private bool $allowDash = false;
+    public int $allowConsecutiveDashes = 0;
+
     private bool $allowDot = false;
+    public int $allowConsecutiveDots = 0;
+
     private bool $allowPlus = false;
+    public int $allowConsecutivePluses = 0;
+
     private bool $allowCases = false;
     private bool $allowExtended = false;
     private int $maxLength = -1;
@@ -22,7 +30,7 @@ class NormalizeConfig
         return $this->allowExtended;
     }
 
-    public function setAllowExtended(bool $allowExtended)
+    public function setAllowExtended(bool $allowExtended): void
     {
         $this->allowExtended = $allowExtended;
     }
@@ -32,9 +40,10 @@ class NormalizeConfig
         return $this->allowPlus;
     }
 
-    public function setAllowPlus(bool $allowPlus)
+    public function setAllowPlus(bool $allowPlus, int $consecutive = 1): void
     {
         $this->allowPlus = $allowPlus;
+        $this->allowConsecutivePluses = $consecutive;
     }
 
     public function getMaxLength(): int
@@ -42,7 +51,7 @@ class NormalizeConfig
         return $this->maxLength;
     }
 
-    public function setMaxLength(int $maxLength)
+    public function setMaxLength(int $maxLength): void
     {
         $this->maxLength = $maxLength;
     }
@@ -52,9 +61,11 @@ class NormalizeConfig
         return $this->allowSlash;
     }
 
-    public function setAllowSlash(bool $allowSlash)
+
+    public function setAllowSlash(bool $allowSlash, int $consecutive = 1): void
     {
         $this->allowSlash = $allowSlash;
+        $this->allowConsecutiveSlashes = $consecutive;
     }
 
     public function isAllowDash(): bool
@@ -62,9 +73,10 @@ class NormalizeConfig
         return $this->allowDash;
     }
 
-    public function setAllowDash(bool $allowDash)
+    public function setAllowDash(bool $allowDash, int $consecutive = 1): void
     {
         $this->allowDash = $allowDash;
+        $this->allowConsecutiveDashes = $consecutive;
     }
 
     public function isAllowDot(): bool
@@ -72,9 +84,10 @@ class NormalizeConfig
         return $this->allowDot;
     }
 
-    public function setAllowDot(bool $allowDot)
+    public function setAllowDot(bool $allowDot, int $consecutive = 1): void
     {
         $this->allowDot = $allowDot;
+        $this->allowConsecutiveDots = $consecutive;
     }
 
     public function isCasesAllowed(): bool
@@ -82,7 +95,7 @@ class NormalizeConfig
         return $this->allowCases;
     }
 
-    public function setIsCasesAllowed(bool $allowCases)
+    public function setIsCasesAllowed(bool $allowCases): void
     {
         $this->allowCases = $allowCases;
     }

@@ -12,9 +12,6 @@ class Normalizer
             $keyFormatConfig = new NormalizeConfig();
         }
 
-        // $id = iconv("UTF-8", "UTF-8//IGNORE", $id);
-        //$id = mb_convert_encoding($id, 'UTF-8', 'UTF-8');
-        //$id = mb_strtolower($id);
         $id = str_replace([
             'ë',
             'é',
@@ -40,24 +37,25 @@ class Normalizer
         ];
         $notAllowed = [
             '(\_{2,})',
-            '(\+{2,})',
+            //'(\+{2,})',
         ];
 
-        if ($keyFormatConfig->isAllowSlash()) {
+        if ($keyFormatConfig->isAllowSlash() && $keyFormatConfig->allowConsecutiveSlashes > 0) {
             $allowedChars[] = '\/';
-            $notAllowed[] = '(\/{2,})';
+//            $notAllowed[] =  '(\/{2,})';
         }
         if ($keyFormatConfig->isAllowDot()) {
             $allowedChars[] = '\.';
-            $notAllowed[] = '(\.{2,})';
+//            $notAllowed[] = '';// '(\.{2,})';
         }
         if ($keyFormatConfig->isAllowDash()) {
             $allowedChars[] = '\-';
-            $notAllowed[] = '(\-{2,})';
+//            $notAllowed[] = '';// '(\-{2,})';
         }
         if ($keyFormatConfig->isAllowPlus()) {
             $allowedChars[] = '\+';
-            $notAllowed[] = '(\+{2,})';
+            // TODO: should we allow up till x amount of plusses next to each other?
+//            $notAllowed[] = '';// '(\+{5,})';
         }
         if ($keyFormatConfig->isAllowExtended()) {
             $characters = [
@@ -88,11 +86,19 @@ class Normalizer
 
         $id = preg_replace($regex, '_', $id);
 
-        //        if (strlen($id) < 1) {
-        //            $ex = new InvalidKeyException('Id must be longer than 1 character');
-        //            echo $ex->getTraceAsString();
-        //            throw $ex;
-        //        }
+
+        if ($keyFormatConfig->isAllowSlash() && $keyFormatConfig->allowConsecutiveSlashes > 0) {
+            $regex = '/(\/{' . ($keyFormatConfig->allowConsecutiveSlashes + 1) . ',})/mi';
+            $id = preg_replace($regex, \str_repeat('/', $keyFormatConfig->allowConsecutiveSlashes), $id);
+        }
+        if ($keyFormatConfig->isAllowDot() && $keyFormatConfig->allowConsecutiveDots > 0) {
+            $regex = '/(\.{' . ($keyFormatConfig->allowConsecutiveDots + 1) . ',})/mi';
+            $id = preg_replace($regex, \str_repeat('.', $keyFormatConfig->allowConsecutiveDots), $id);
+        }
+        if ($keyFormatConfig->isAllowDash() && $keyFormatConfig->allowConsecutiveDashes > 0) {
+            $regex = '/(\-{' . ($keyFormatConfig->allowConsecutiveDashes + 1) . ',})/mi';
+            $id = preg_replace($regex, \str_repeat('-', $keyFormatConfig->allowConsecutiveDashes), $id);
+        }
 
         if (!$keyFormatConfig->isCasesAllowed()) {
             $id = strtolower($id);
@@ -103,13 +109,10 @@ class Normalizer
         }
 
         //Remove leading or trailing slashes
-        return trim($id, '_');
-        //Remove multi underscores
-        //        $code = preg_replace('!\s+!', ' ', $code);
-        //        $code = trim($code);
-        //        $code = str_replace(' ', '_', $code);
+        $id = trim($id, '_');
 
-        //return $id;
+        return $id;
+//        return new NormalizedCode($id);
     }
 
     public static function normalizeCollection(array $codes, NormalizeConfig $keyFormatConfig = null): array

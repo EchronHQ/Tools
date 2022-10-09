@@ -124,10 +124,13 @@ class StringHelper
 
     public static function multiExplode(array $delimiters, string $string): array
     {
-        $x = '**|-|**';
-
-        $ready = str_replace($delimiters, $x, $string);
-        return explode($x, $ready);
+        // TODO: should we allow an empty delimiter array?
+        // TODO: test if all delimiters are string
+        if (empty($delimiters)) {
+            return [$string];
+        }
+        $ready = str_replace($delimiters, $delimiters[0], $string);
+        return explode($delimiters[0], $ready);
 
     }
 }

@@ -138,4 +138,23 @@ class Time
 
         return null;
     }
+
+    /**
+     * createFromFormat("2022-10-23 15:49:06")
+     * @param string $time
+     * @param string $format
+     * @return \DateTime
+     * @throws \InvalidArgumentException
+     */
+    public static function createFromFormat(string $time, string $format = 'Y-m-d H:m:s'): \DateTime
+    {
+        $result = \DateTime::createFromFormat($format, $time);
+        if ($result === false) {
+            $errors = \DateTime::getLastErrors();
+            foreach ($errors["errors"] as $error) {
+                throw new \InvalidArgumentException($error);
+            }
+        }
+        return $result;
+    }
 }

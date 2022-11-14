@@ -12,9 +12,9 @@ class CreateFromFormatTest extends \PHPUnit\Framework\TestCase
 
         $now = new DateTime('now');
 
-        $result = Time::createFromFormat($now->format('Y-m-d H:m:s'));
+        $result = Time::createFromFormat($now->format('Y-m-d H:i:s'));
 
-        $this->assertEquals($now->format('Y-m-d H:m:s'), $result->format('Y-m-d H:m:s'));
+        $this->assertEquals($now->format('Y-m-d H:i:s'), $result->format('Y-m-d H:i:s'));
     }
 
     public function testInvalid()

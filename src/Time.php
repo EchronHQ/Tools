@@ -146,7 +146,7 @@ class Time
      * @return \DateTime
      * @throws \InvalidArgumentException
      */
-    public static function createFromFormat(string $time, string $format = 'Y-m-d H:m:s'): \DateTime
+    public static function createFromFormat(string $time, string $format = 'Y-m-d H:i:s'): \DateTime
     {
         $result = \DateTime::createFromFormat($format, $time);
         if ($result === false) {

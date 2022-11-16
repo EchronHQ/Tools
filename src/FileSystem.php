@@ -8,7 +8,7 @@ use Echron\Tools\Exception\PermissionsDeniedException;
 
 class FileSystem
 {
-    public static function createDir(string $path, bool $recursive = true, $mode = 0777)
+    public static function createDir(string $path, bool $recursive = true, int $permissions = 0777)
     {
         if (self::dirExists($path)) {
             return;
@@ -16,7 +16,7 @@ class FileSystem
         $exception = null;
         $old = error_reporting(0);
         try {
-            $created = mkdir($path, $mode, $recursive);
+            $created = mkdir($path, $permissions, $recursive);
             if (!$created) {
                 if (ExceptionHelper::hasLastError()) {
                     $exception = ExceptionHelper::getLastError();
@@ -162,15 +162,16 @@ class FileSystem
         if (is_dir($path)) {
             if ($recursive) {
                 $directoryIterator = new \RecursiveDirectoryIterator($path);
-                $Iterator = new \RecursiveIteratorIterator($directoryIterator);
-
-                /** @var \SplFileInfo $x */
-                foreach ($Iterator as $x) {
-                    $files[] = $x;
-                }
+                $iterator = new \RecursiveIteratorIterator($directoryIterator);
             } else {
-                throw new \Exception('Not implemented');
-                // $iterator = new \DirectoryIterator($path);
+                $directoryIterator = new \DirectoryIterator($path);
+                $iterator = new \IteratorIterator($directoryIterator);
+            }
+            /** @var \SplFileInfo $file */
+            foreach ($iterator as $file) {
+                if ($file->getType() === 'file') {
+                    $files[] = $file;
+                }
             }
         }
 

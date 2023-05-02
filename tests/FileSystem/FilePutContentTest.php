@@ -1,5 +1,7 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
+
+namespace Echron\Tools\FileSystem;
 
 class FilePutContentTest extends \PHPUnit\Framework\TestCase
 {

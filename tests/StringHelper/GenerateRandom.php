@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+namespace Echron\Tools\StringHelper;
+
 class GenerateRandom extends \PHPUnit\Framework\TestCase
 {
 

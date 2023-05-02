@@ -7,6 +7,7 @@ class Time
 {
     public static function readableSeconds(float $seconds, bool $short = false, int $precision = 2): string
     {
+
         $units = [
             7 * 24 * 60 * 60 => [
                 'long'  => 'week',
@@ -156,5 +157,17 @@ class Time
             }
         }
         return $result;
+    }
+
+    public static function intervalToSeconds(\DateInterval $interval): int
+    {
+        return ($interval->s) + ($interval->i * 60) + ($interval->h * 60 * 60) + ($interval->d * 60 * 60 * 24) + ($interval->m * 60 * 60 * 24 * 30) + ($interval->y * 60 * 60 * 24 * 365);
+    }
+
+    public static function secondsToInterval(int $seconds): \DateInterval
+    {
+        $start = new \DateTime("@0");
+        $end = new \DateTime("@$seconds");
+        return $start->diff($end);
     }
 }

@@ -1,5 +1,7 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
+
+use Echron\Tools\ByteHelper;
 
 class ReadableTest extends \PHPUnit\Framework\TestCase
 {

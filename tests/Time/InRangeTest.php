@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+namespace Echron\Tools\Time;
+
 class InRangeTest extends \PHPUnit\Framework\TestCase
 {
 

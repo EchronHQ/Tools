@@ -65,4 +65,26 @@ class ArrayHelper
 //
 //        return false;
     }
+
+    /**
+     * Shuffle array by seed
+     * @param array $input
+     * @param int $seed
+     * @return array
+     * @throws \Exception
+     */
+    public static function shuffle(array $input, int $seed): array
+    {
+        mt_srand($seed);
+        $size = count($input);
+        for ($i = $size - 1; $i > 0; $i--) {
+            $r = random_int(0, $i);
+            $tmp = $input[$i];
+            $input[$i] = $input[$r];
+            $input[$r] = $tmp;
+        }
+        // Make sure our seed is random again
+        mt_srand();
+        return $input;
+    }
 }

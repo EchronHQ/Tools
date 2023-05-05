@@ -131,6 +131,39 @@ class StringHelper
         }
         $ready = str_replace($delimiters, $delimiters[0], $string);
         return explode($delimiters[0], $ready);
+    }
 
+    /**
+     * Generate checksum based on string
+     * @param string $title
+     * @param int|null $max
+     * @return int
+     */
+    public static function checksum(string $title, int $max = null): int
+    {
+        $characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+        $title = \strtolower($title);
+        $title = str_replace(['_', ' '], '', $title);
+        $chars = str_split($title);
+
+
+        $sum = 0;
+        foreach ($chars as $char) {
+
+
+            $pos = \strpos($characters, $char);
+            if ($pos === false) {
+                // $this->logger->warning('Unable to calculate random key based on category name: character "' . $char . '" not recognized', ['title' => $title]);
+            } else {
+                $sum += $pos;
+            }
+
+        }
+        $checksum = $sum / \strlen($title);
+        if ($max === null) {
+            return (int)\round($checksum);
+        }
+        return (int)\round($checksum / \strlen($characters) * $max, 0);
     }
 }

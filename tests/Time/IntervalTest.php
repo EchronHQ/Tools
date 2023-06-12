@@ -1,15 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools\Time;
-
 
 use Echron\Tools\Time;
 use PHPUnit\Framework\TestCase;
 
 class IntervalTest extends TestCase
 {
-
     public function testIntervalToSeconds(): void
     {
         $start = new \DateTime('now');

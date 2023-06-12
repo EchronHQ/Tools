@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools\Normalize;
 
 class NormalizerTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testAllowSlash()
     {
         $keyFormatConfig1 = new NormalizeConfig();

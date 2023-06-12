@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools\Time;
 
 class ReadableSecondsTest extends \PHPUnit\Framework\TestCase
 {
-
     public function test3Hours()
     {
         $seconds = 10800;

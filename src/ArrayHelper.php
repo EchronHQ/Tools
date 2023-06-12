@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools;
 
 class ArrayHelper
 {
-
     public static function unique(array $input, array $fields = null): array
     {
         if (\is_null($fields)) {
@@ -54,16 +54,16 @@ class ArrayHelper
     {
         return count($array) > count(array_unique($array, SORT_REGULAR));
         // Flip can only be used on string and integer values
-//        return count($array) === count(array_flip($array));
-//        // TODO: implement objects
-//        $dupe_array = [];
-//        foreach ($array as $val) {
-//            if (++$dupe_array[$val] > 1) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
+        //        return count($array) === count(array_flip($array));
+        //        // TODO: implement objects
+        //        $dupe_array = [];
+        //        foreach ($array as $val) {
+        //            if (++$dupe_array[$val] > 1) {
+        //                return true;
+        //            }
+        //        }
+        //
+        //        return false;
     }
 
     /**

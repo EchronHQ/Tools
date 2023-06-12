@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools;
@@ -46,8 +47,7 @@ class StringHelper
         string $mask = '*',
         int    $showStartCharacters = 0,
         int    $showEndCharacters = 0
-    ): string
-    {
+    ): string {
         $length = strlen($target);
         $masked = str_repeat($mask, $length);
 
@@ -101,8 +101,7 @@ class StringHelper
     public static function generateRandom(
         int    $length = 8,
         string $keySpace = 'A-Za-z0-9'
-    ): string
-    {
+    ): string {
         $characterPools = [
             '0123456789', 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         ];

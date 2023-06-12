@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools;
@@ -86,8 +87,7 @@ class Time
         $periodEndDate,
         string $startTime = 'today 00:00',
         string $endTime = 'today 23:59'
-    ): bool
-    {
+    ): bool {
         $todayStart = gmdate('U', strtotime($startTime));
         $todayEnd = gmdate('U', strtotime($endTime));
 
@@ -105,7 +105,6 @@ class Time
                 $result = true;
             }
         }
-
         return $result;
     }
 
@@ -128,7 +127,7 @@ class Time
         return false;
     }
 
-    private static function getTime($input)
+    private static function getTime(mixed $input): int|null
     {
         if (is_numeric($input)) {
             return $input;

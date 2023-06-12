@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools;
@@ -237,18 +238,18 @@ class FileSystem
         error_reporting($old);
 
         if ($exception !== null) {
-//            switch ($exception->getMessage()) {
-//                case 'mkdir(): Permissions denied':
-//                    throw new PermissionsDeniedException('Unable to create directory "' . $path . '": permissions denied');
-//                    break;
-//                case 'mkdir(): File exists':
-//                    throw new FileAlreadyExistsException('Unable to create directory "' . $path . '": directory already exists');
-//                    break;
-//                default:
+            //            switch ($exception->getMessage()) {
+            //                case 'mkdir(): Permissions denied':
+            //                    throw new PermissionsDeniedException('Unable to create directory "' . $path . '": permissions denied');
+            //                    break;
+            //                case 'mkdir(): File exists':
+            //                    throw new FileAlreadyExistsException('Unable to create directory "' . $path . '": directory already exists');
+            //                    break;
+            //                default:
             throw $exception;
-//            }
+            //            }
         }
 
-        return $time;
+        return 0;
     }
 }

@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 use Echron\Tools\ByteHelper;
 
 class ReadableTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testZero()
     {
         $result = \Echron\Tools\Bytes::readable(0);

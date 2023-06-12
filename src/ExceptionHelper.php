@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools;
@@ -23,7 +24,7 @@ class ExceptionHelper
             return new \Exception($message);
         }
 
-        return new \Exception(null);
+        return new \Exception('Unknown exception');
     }
 
     public static function hasLastError(): bool

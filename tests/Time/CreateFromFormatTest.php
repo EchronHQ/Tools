@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools\Time;
@@ -7,7 +8,6 @@ use Echron\Tools\Time;
 
 class CreateFromFormatTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testValid()
     {
         $seconds = 10800;
@@ -23,7 +23,7 @@ class CreateFromFormatTest extends \PHPUnit\Framework\TestCase
     {
 
         $this->expectException(\InvalidArgumentException::class);
-//        $this->expectExceptionMessage('test');
+        //        $this->expectExceptionMessage('test');
         $result = Time::createFromFormat("not a date");
     }
 }

@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools;
-
 
 class VarHelperTest extends \PHPUnit\Framework\TestCase
 {

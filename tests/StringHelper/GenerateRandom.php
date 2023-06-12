@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools\StringHelper;
 
 class GenerateRandom extends \PHPUnit\Framework\TestCase
 {
-
     public function testNormal()
     {
         $result = \Echron\Tools\StringHelper::generateRandom();

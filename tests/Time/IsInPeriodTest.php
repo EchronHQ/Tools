@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools\Time;
+
 class IsInPeriodTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testWithFromOnly()
     {
         $from = new \DateTime('yesterday 12:00');

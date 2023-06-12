@@ -1,12 +1,14 @@
 <?php
+
 declare(strict_types=1);
+
+namespace Echron\Tools\Time;
 
 class IsInPeriodTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testWithFromOnly()
     {
-        $from = new DateTime('yesterday 12:00');
+        $from = new \DateTime('yesterday 12:00');
         $to = null;
 
         $result = \Echron\Tools\Time::isInPeriod($from, $to);
@@ -15,8 +17,8 @@ class IsInPeriodTest extends \PHPUnit\Framework\TestCase
 
     public function testWithFromAndToInPast()
     {
-        $from = new DateTime('yesterday 12:00');
-        $to = new DateTime('yesterday 13:00');;
+        $from = new \DateTime('yesterday 12:00');
+        $to = new \DateTime('yesterday 13:00');
 
         $result = \Echron\Tools\Time::isInPeriod($from, $to);
         $this->assertFalse($result);
@@ -27,8 +29,8 @@ class IsInPeriodTest extends \PHPUnit\Framework\TestCase
 
     public function testWithFromInPastAndToInFuture()
     {
-        $from = new DateTime('yesterday 12:00');
-        $to = new DateTime('tomorrow');
+        $from = new \DateTime('yesterday 12:00');
+        $to = new \DateTime('tomorrow');
 
         $result = \Echron\Tools\Time::isInPeriod($from, $to);
         $this->assertTrue($result);
@@ -39,8 +41,8 @@ class IsInPeriodTest extends \PHPUnit\Framework\TestCase
 
     public function testTimeEqualsFromOrEqualsTo()
     {
-        $from = new DateTime('today 00:00');
-        $to = new DateTime('today 23:59');
+        $from = new \DateTime('today 00:00');
+        $to = new \DateTime('today 23:59');
 
         $result = \Echron\Tools\Time::isInPeriod($from, $to, $from);
         $this->assertTrue($result);

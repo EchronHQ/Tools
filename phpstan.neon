@@ -1,0 +1,11 @@
+includes:
+    - phpstan-baseline.neon
+#    - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
+parameters:
+	level: 0
+	paths:
+	    - src
+	parallel:
+	    maximumNumberOfProcesses: 1
+	treatPhpDocTypesAsCertain: false
+

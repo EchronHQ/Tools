@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools\Normalize;
@@ -100,4 +101,3 @@ class NormalizeConfig
         $this->allowCases = $allowCases;
     }
 }
-

@@ -1,18 +1,17 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools;
 
 class CsvHelper
 {
-
     public static function parseCSVFile(
         string $filePath,
         string $lineDelimiter = \PHP_EOL,
         string $delimiter = ';',
         array  $headers = null
-    ): array
-    {
+    ): array {
         // TODO: method uses a lot of memory when reading large CSV files, is there a way to reduce this?
         if (!\file_exists($filePath)) {
             throw new \Exception('Unable to get FileMaker products: CSV file "' . $filePath . '" does not exist');

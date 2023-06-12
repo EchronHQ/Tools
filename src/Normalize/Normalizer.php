@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools\Normalize;
@@ -42,20 +43,20 @@ class Normalizer
 
         if ($keyFormatConfig->isAllowSlash() && $keyFormatConfig->allowConsecutiveSlashes > 0) {
             $allowedChars[] = '\/';
-//            $notAllowed[] =  '(\/{2,})';
+            //            $notAllowed[] =  '(\/{2,})';
         }
         if ($keyFormatConfig->isAllowDot()) {
             $allowedChars[] = '\.';
-//            $notAllowed[] = '';// '(\.{2,})';
+            //            $notAllowed[] = '';// '(\.{2,})';
         }
         if ($keyFormatConfig->isAllowDash()) {
             $allowedChars[] = '\-';
-//            $notAllowed[] = '';// '(\-{2,})';
+            //            $notAllowed[] = '';// '(\-{2,})';
         }
         if ($keyFormatConfig->isAllowPlus()) {
             $allowedChars[] = '\+';
             // TODO: should we allow up till x amount of plusses next to each other?
-//            $notAllowed[] = '';// '(\+{5,})';
+            //            $notAllowed[] = '';// '(\+{5,})';
         }
         if ($keyFormatConfig->isAllowExtended()) {
             $characters = [
@@ -112,7 +113,7 @@ class Normalizer
         $id = trim($id, '_');
 
         return $id;
-//        return new NormalizedCode($id);
+        //        return new NormalizedCode($id);
     }
 
     public static function normalizeCollection(array $codes, NormalizeConfig $keyFormatConfig = null): array

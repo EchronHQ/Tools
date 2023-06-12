@@ -1,7 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-
+namespace Echron\Tools;
 
 class VarHelperTest extends \PHPUnit\Framework\TestCase
 {
@@ -33,7 +34,7 @@ class VarHelperTest extends \PHPUnit\Framework\TestCase
 
     public function testObjectDontReturnClass()
     {
-        $object = new stdClass();
+        $object = new \stdClass();
 
         $result = \Echron\Tools\VarHelper::getType($object, false);
         $this->assertEquals('object', $result);
@@ -41,7 +42,7 @@ class VarHelperTest extends \PHPUnit\Framework\TestCase
 
     public function testObjectReturnClass()
     {
-        $object = new stdClass();
+        $object = new \stdClass();
 
         $result = \Echron\Tools\VarHelper::getType($object);
         $this->assertEquals('stdClass', $result);

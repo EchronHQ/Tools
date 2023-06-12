@@ -1,5 +1,8 @@
 <?php
+
 declare(strict_types=1);
+
+namespace Echron\Tools\StringHelper;
 
 class EndsWithTest extends \PHPUnit\Framework\TestCase
 {

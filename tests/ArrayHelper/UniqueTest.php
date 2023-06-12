@@ -1,11 +1,13 @@
 <?php
+
 declare(strict_types=1);
+
+namespace Echron\Tools\ArrayHelper;
 
 use Echron\Tools\ArrayHelper;
 
 class UniqueTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testEmpty()
     {
         $result = ArrayHelper::unique([], []);
@@ -17,7 +19,7 @@ class UniqueTest extends \PHPUnit\Framework\TestCase
 
     public function testFlatArray()
     {
-        $input = ['a','b','c'];
+        $input = ['a', 'b', 'c'];
         $result = ArrayHelper::unique($input, []);
         $this->assertEquals($input, $result);
         $result = ArrayHelper::unique($input, ['fieldname']);
@@ -29,7 +31,7 @@ class UniqueTest extends \PHPUnit\Framework\TestCase
         $input = [
             ['fieldA' => 'valueA'],
             ['fieldB' => 'valueA'],
-            ['fieldA' => 'valueA2','fieldC' => 'valueA'],
+            ['fieldA' => 'valueA2', 'fieldC' => 'valueA'],
         ];
 
         $result = ArrayHelper::unique($input, ['fieldB']);
@@ -71,15 +73,15 @@ class UniqueTest extends \PHPUnit\Framework\TestCase
 
 
         $input = [
-            ['fieldA' => 'valueA','fieldB' => 'valueB'],
-            ['fieldA' => 'valueA2','fieldB'=> 'valueB'],
-            ['fieldA' => 'valueA2','fieldB' => 'valueB2'],
-            ['fieldA' => 'valueA','fieldB'=> 'valueB'],
+            ['fieldA' => 'valueA', 'fieldB' => 'valueB'],
+            ['fieldA' => 'valueA2', 'fieldB' => 'valueB'],
+            ['fieldA' => 'valueA2', 'fieldB' => 'valueB2'],
+            ['fieldA' => 'valueA', 'fieldB' => 'valueB'],
         ];
         $expected = [
-            ['fieldA' => 'valueA','fieldB' => 'valueB'],
-            ['fieldA' => 'valueA2','fieldB'=> 'valueB'],
-            ['fieldA' => 'valueA2','fieldB' => 'valueB2'],
+            ['fieldA' => 'valueA', 'fieldB' => 'valueB'],
+            ['fieldA' => 'valueA2', 'fieldB' => 'valueB'],
+            ['fieldA' => 'valueA2', 'fieldB' => 'valueB2'],
         ];
         $result = ArrayHelper::unique($input);
         $this->assertEquals($expected, $result);

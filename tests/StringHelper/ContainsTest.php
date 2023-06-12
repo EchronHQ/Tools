@@ -1,9 +1,11 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
+
+namespace Echron\Tools\StringHelper;
 
 class ContainsTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testNot()
     {
         $result = \Echron\Tools\StringHelper::contains('abcdef123', 'zx');

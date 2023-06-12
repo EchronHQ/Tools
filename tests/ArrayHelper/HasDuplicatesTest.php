@@ -1,11 +1,13 @@
 <?php
+
 declare(strict_types=1);
+
+namespace Echron\Tools\ArrayHelper;
 
 use Echron\Tools\ArrayHelper;
 
 class HasDuplicatesTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testEmpty()
     {
         $result = ArrayHelper::hasDuplicates([]);

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools;
@@ -7,6 +8,7 @@ class Time
 {
     public static function readableSeconds(float $seconds, bool $short = false, int $precision = 2): string
     {
+
         $units = [
             7 * 24 * 60 * 60 => [
                 'long'  => 'week',
@@ -85,8 +87,7 @@ class Time
         $periodEndDate,
         string $startTime = 'today 00:00',
         string $endTime = 'today 23:59'
-    ): bool
-    {
+    ): bool {
         $todayStart = gmdate('U', strtotime($startTime));
         $todayEnd = gmdate('U', strtotime($endTime));
 
@@ -104,7 +105,6 @@ class Time
                 $result = true;
             }
         }
-
         return $result;
     }
 
@@ -127,7 +127,7 @@ class Time
         return false;
     }
 
-    private static function getTime($input)
+    private static function getTime(mixed $input): int|null
     {
         if (is_numeric($input)) {
             return $input;
@@ -156,5 +156,17 @@ class Time
             }
         }
         return $result;
+    }
+
+    public static function intervalToSeconds(\DateInterval $interval): int
+    {
+        return ($interval->s) + ($interval->i * 60) + ($interval->h * 60 * 60) + ($interval->d * 60 * 60 * 24) + ($interval->m * 60 * 60 * 24 * 30) + ($interval->y * 60 * 60 * 24 * 365);
+    }
+
+    public static function secondsToInterval(int $seconds): \DateInterval
+    {
+        $start = new \DateTime("@0");
+        $end = new \DateTime("@$seconds");
+        return $start->diff($end);
     }
 }

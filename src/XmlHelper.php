@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Echron\Tools;
 
 class XmlHelper
 {
-
     public static function parseStringToSimpleXml(string $xmlString): \SimpleXMLElement
     {
         libxml_use_internal_errors(true);

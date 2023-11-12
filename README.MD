@@ -1,26 +1,19 @@
-## PHP7 Tool library
+# Echron PHP Tool library
 
-#File
+## Installation
 
-- create directory
-- check if file is readable/writable
+Install the latest version with
 
-#TypedEnum
+```bash
+$ composer require echron/tools
+```
 
-class DayType extends TypedEnum
-{
+## About
 
-    public static function Monday()
-    {
-        return self::_create(0);
-    }
-    public static function Tuesday()
-        {
-            return self::_create(1);
-        }
+### Author
 
-}
+Stijn Duynslaeger - <stijn@echron.com> - <https://echron.com>
 
-# Run PHPStan
+## Run PHPStan
 
 docker run -it -v .:/app -w /app --rm attlaz/php:8.1 composer run-script phpstan

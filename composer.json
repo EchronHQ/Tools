@@ -1,14 +1,14 @@
 {
   "name": "echron/tools",
   "description": "Tools library for PHP",
-  "homepage": "https://github.com/echron/tools",
+  "homepage": "https://github.com/EchronHQ/Tools",
   "type": "library",
   "license": "MIT",
   "authors": [
     {
       "name": "Stijn Duynslaeger",
-      "email": "stijn@echron.be",
-      "homepage": "https://echron.be"
+      "email": "stijn@echron.com",
+      "homepage": "https://echron.com"
     }
   ],
   "require": {

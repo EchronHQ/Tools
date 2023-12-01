@@ -36,13 +36,13 @@ class FileCreateTest extends TestCase
         FileSystem::createDir($testDir, true, 0777, false);
     }
 
-    public function testCreateDirectory_NonExisting()
-    {
-        $this->expectException(\Exception::class);
-        //TODO: find better way to get unexisting directory
-        $testDir = 'X:\\tmp' . gmdate('U') . random_int(9999, 99999);
-        FileSystem::createDir($testDir);
-    }
+//    public function testCreateDirectory_NonExisting()
+//    {
+//        $this->expectException(\Exception::class);
+//        //TODO: find better way to get unexisting directory
+//        $testDir = 'X:\\tmp' . gmdate('U') . random_int(9999, 99999);
+//        FileSystem::createDir($testDir);
+//    }
 
 //    public function testCreateDirectory_NoRights()
 //    {

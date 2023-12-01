@@ -1,5 +1,6 @@
 # Echron PHP Tool library
 
+[![Unit Tests](https://github.com/EchronHQ/Tools/actions/workflows/php.yml/badge.svg)](https://github.com/EchronHQ/Tools/actions/workflows/php.yml)
 [![Latest Stable Version](https://img.shields.io/packagist/v/echron/tools.svg)](https://packagist.org/packages/echron/tools)
 
 ## About

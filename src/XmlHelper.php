@@ -45,7 +45,7 @@ class XmlHelper
         $xmlLoaded = $xmlDom->loadXML($xmlString);
         if (!$xmlLoaded) {
             foreach (libxml_get_errors() as $error) {
-                return new \Exception($error->message, $error->code);
+                throw new \Exception($error->message, $error->code);
 
 
             }
@@ -67,7 +67,7 @@ class XmlHelper
 
     }
 
-    private static function _validateConfigFile(\DOMDocument $xmlDom, $xsdFilePath): array
+    private static function _validateConfigFile(\DOMDocument $xmlDom, string $xsdFilePath): array
     {
         libxml_use_internal_errors(true);
         $errors = [];

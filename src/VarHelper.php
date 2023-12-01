@@ -6,7 +6,7 @@ namespace Echron\Tools;
 
 class VarHelper
 {
-    public static function getType($var, bool $returnClassIfObject = true): string
+    public static function getType(mixed $var, bool $returnClassIfObject = true): string
     {
         $type = gettype($var);
         if ($type === 'object' && $returnClassIfObject) {

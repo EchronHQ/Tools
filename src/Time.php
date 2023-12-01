@@ -80,10 +80,10 @@ class Time
     }
 
     public static function todayInRange(
-        $periodStartDate,
-        $periodEndDate,
-        string $startTime = 'today 00:00',
-        string $endTime = 'today 23:59'
+        int|string|null $periodStartDate,
+        int|string|null $periodEndDate,
+        string          $startTime = 'today 00:00',
+        string          $endTime = 'today 23:59'
     ): bool
     {
         $todayStart = gmdate('U', strtotime($startTime));

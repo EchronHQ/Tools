@@ -110,7 +110,7 @@ class FileSystem
         return $bytesWritten;
     }
 
-    public static function touch(string $path, \DateTime $modificationTime = null, \DateTime $accessTime = null)
+    public static function touch(string $path, \DateTime $modificationTime = null, \DateTime $accessTime = null): void
     {
         $exception = null;
         $old = error_reporting(0);
@@ -196,7 +196,7 @@ class FileSystem
         return preg_replace('#/+#', \DIRECTORY_SEPARATOR, join(\DIRECTORY_SEPARATOR, $paths));
     }
 
-    public static function copyDirectory(string $source, string $destination, bool $recursive = false)
+    public static function copyDirectory(string $source, string $destination, bool $recursive = false): void
     {
         // open the source directory
         $dir = opendir($source);

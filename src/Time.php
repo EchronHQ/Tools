@@ -11,23 +11,23 @@ class Time
 
         $units = [
             7 * 24 * 60 * 60 => [
-                'long' => 'week',
+                'long' => ' week',
                 'short' => 'w',
             ],
             24 * 60 * 60 => [
-                'long' => 'day',
+                'long' => ' day',
                 'short' => 'd',
             ],
             60 * 60 => [
-                'long' => 'hour',
+                'long' => ' hour',
                 'short' => 'h',
             ],
             60 => [
-                'long' => 'minute',
+                'long' => ' minute',
                 'short' => 'm',
             ],
             1 => [
-                'long' => 'second',
+                'long' => ' second',
                 'short' => 's',
             ],
         ];
@@ -48,14 +48,11 @@ class Time
             }
 
             if ($quot) {
-                $label = '';
-                if ($short) {
-                    $label = $data['short'];
-                } else {
-                    $label = ' ' . $data['long'];
-                }
+                $label = $short ? $data['short'] : $data['long'];
+
                 $sQuot = $quot;
-                if ($divisor === 1 && $quot < 1.0) {
+
+                if ($divisor === 1) {
                     $sQuot = number_format($quot, $precision);
                 }
 
@@ -131,7 +128,7 @@ class Time
     private static function getTime(mixed $input): int|null
     {
         if (is_numeric($input)) {
-            return $input;
+            return (int)$input;
         }
         if (is_string($input)) {
             return strtotime($input);

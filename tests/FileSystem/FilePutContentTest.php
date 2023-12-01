@@ -8,7 +8,7 @@ class FilePutContentTest extends \PHPUnit\Framework\TestCase
 {
     public function testPutContent()
     {
-        $testFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'tmp' . gmdate('U') . rand(9999, 99999) . 'txt';
+        $testFile = __DIR__ . DIRECTORY_SEPARATOR . 'tmp' . gmdate('U') . rand(9999, 99999) . 'txt';
 
         $dummyValue = 'Lorem ipsum';
 
@@ -22,7 +22,7 @@ class FilePutContentTest extends \PHPUnit\Framework\TestCase
 
     public function testPutContent_NonExistingDir()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(\Exception::class);
         $testFile = 'X:tmp' . DIRECTORY_SEPARATOR . 'tmp' . gmdate('U') . rand(9999, 99999) . 'txt';
 
         $dummyValue = 'Lorem ipsum';

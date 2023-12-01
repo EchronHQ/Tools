@@ -24,16 +24,16 @@ class HasDuplicatesTest extends \PHPUnit\Framework\TestCase
 
     public function testObjects()
     {
-        $red = new stdClass();
+        $red = new \stdClass();
         $red->value = 'red';
 
-        $red2 = new stdClass();
+        $red2 = new \stdClass();
         $red2->value = 'red';
 
-        $green = new stdClass();
+        $green = new \stdClass();
         $green->value = 'green';
 
-        $purple = new stdClass();
+        $purple = new \stdClass();
         $purple->value = 'purple';
 
         $this->assertFalse(ArrayHelper::hasDuplicates([$red, $green, $purple]));

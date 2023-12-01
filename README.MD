@@ -15,8 +15,35 @@ Install the latest version with
 composer require echron/tools
 ```
 
-## Run PHPStan
+## Usage
 
-```bash
-docker run -it -v .:/app -w /app --rm attlaz/php:8.1 composer run-script phpstan
+### Output seconds as human-readable string
+
+```php
+echo \Echron\Tools\Time::readableSeconds(60 * 24);
+>> 24 minutes
+echo \Echron\Tools\Time::readableSeconds(60 + 3.4221580028534);
+>> 1 minute, 3.42 seconds
+echo \Echron\Tools\Time::readableSeconds(3.455669555);
+>> 3.46 seconds
+```
+
+### Check if array has duplicates
+
+```php
+$a = ArrayHelper::hasDuplicates(['red', 'green', 'purple']);
+print_r($a)
+>> false
+
+$b = ArrayHelper::hasDuplicates(['red', 'green', 'purple','red]);
+print_r($b)
+>> true
+```
+
+### Filter array by unique values
+
+```php
+$a = ArrayHelper::unique(['red', 'green', 'purple'],['orange','red']);
+print_r($a)
+>> ['red','green','purple','orange']
 ```

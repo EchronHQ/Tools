@@ -11,7 +11,7 @@
 Install the latest version with
 
 ```bash
-$ composer require echron/tools
+composer require echron/tools
 ```
 
 ## Run PHPStan

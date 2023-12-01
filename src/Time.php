@@ -11,23 +11,23 @@ class Time
 
         $units = [
             7 * 24 * 60 * 60 => [
-                'long'  => 'week',
+                'long' => 'week',
                 'short' => 'w',
             ],
-            24 * 60 * 60     => [
-                'long'  => 'day',
+            24 * 60 * 60 => [
+                'long' => 'day',
                 'short' => 'd',
             ],
-            60 * 60          => [
-                'long'  => 'hour',
+            60 * 60 => [
+                'long' => 'hour',
                 'short' => 'h',
             ],
-            60               => [
-                'long'  => 'minute',
+            60 => [
+                'long' => 'minute',
                 'short' => 'm',
             ],
-            1                => [
-                'long'  => 'second',
+            1 => [
+                'long' => 'second',
                 'short' => 's',
             ],
         ];
@@ -35,14 +35,14 @@ class Time
         if ($seconds === 0.0) {
             if ($short) {
                 return '0s';
-            } else {
-                return '0 seconds';
             }
+
+            return '0 seconds';
         }
         $s = '';
         foreach ($units as $divisor => $data) {
             if ($divisor !== 1) {
-                $quot = intval($seconds / $divisor);
+                $quot = (int)($seconds / $divisor);
             } else {
                 $quot = $seconds;
             }
@@ -71,7 +71,7 @@ class Time
             }
         }
 
-        if (strlen($s) > 0) {
+        if ($s !== '') {
             if ($short) {
                 $s = substr($s, 0, -1);
             } else {
@@ -87,7 +87,8 @@ class Time
         $periodEndDate,
         string $startTime = 'today 00:00',
         string $endTime = 'today 23:59'
-    ): bool {
+    ): bool
+    {
         $todayStart = gmdate('U', strtotime($startTime));
         $todayEnd = gmdate('U', strtotime($endTime));
 

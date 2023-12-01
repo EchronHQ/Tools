@@ -9,10 +9,14 @@ use Echron\Tools\Exception\PermissionsDeniedException;
 
 class FileSystem
 {
-    public static function createDir(string $path, bool $recursive = true, int $permissions = 0777)
+    public static function createDir(string $path, bool $recursive = true, int $permissions = 0777, bool $ignoreIfExists = true): void
     {
         if (self::dirExists($path)) {
-            return;
+            if ($ignoreIfExists) {
+                return;
+            }
+
+            throw new FileAlreadyExistsException('Unable to create directory "' . $path . '": directory already exists');
         }
         $exception = null;
         $old = error_reporting(0);

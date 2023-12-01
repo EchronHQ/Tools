@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Echron\Tools\FileSystem;
 
-class FileCreateTest extends \PHPUnit\Framework\TestCase
+use Echron\Tools\Exception\FileAlreadyExistsException;
+use Echron\Tools\FileSystem;
+use PHPUnit\Framework\TestCase;
+
+class FileCreateTest extends TestCase
 {
     public function testCreateDirectory()
     {
-        $testDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'tmp' . gmdate('U') . rand(9999, 99999);
+        $testDir = __DIR__ . DIRECTORY_SEPARATOR . 'tmp' . gmdate('U') . random_int(9999, 99999);
 
         $this->assertFileDoesNotExist($testDir);
-        \Echron\Tools\FileSystem::createDir($testDir);
+        FileSystem::createDir($testDir);
 
         $this->assertFileExists($testDir);
 
@@ -20,31 +24,31 @@ class FileCreateTest extends \PHPUnit\Framework\TestCase
 
     public function testCreateExisting()
     {
-        $testDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'tmp' . gmdate('U') . rand(9999, 99999);
+        $testDir = __DIR__ . DIRECTORY_SEPARATOR . 'tmp' . gmdate('U') . random_int(9999, 99999);
 
-        $this->expectException(\Echron\Tools\Exception\FileAlreadyExistsException::class);
+        $this->expectException(FileAlreadyExistsException::class);
         $this->expectExceptionMessage('Unable to create directory "' . $testDir . '": directory already exists');
 
         $this->assertFileDoesNotExist($testDir);
-        \Echron\Tools\FileSystem::createDir($testDir);
+        FileSystem::createDir($testDir, true, 0777, false);
         $this->assertFileExists($testDir);
 
-        \Echron\Tools\FileSystem::createDir($testDir);
+        FileSystem::createDir($testDir, true, 0777, false);
     }
 
     public function testCreateDirectory_NonExisting()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(\Exception::class);
         //TODO: find better way to get unexisting directory
-        $testDir = 'X:\\tmp' . gmdate('U') . rand(9999, 99999);
-        \Echron\Tools\FileSystem::createDir($testDir);
+        $testDir = 'X:\\tmp' . gmdate('U') . random_int(9999, 99999);
+        FileSystem::createDir($testDir);
     }
 
-    public function testCreateDirectory_NoRights()
-    {
-        $this->expectException(Exception::class);
-        //TODO: find better way to get directory without rights
-        $testDir = 'X:\\tmp' . gmdate('U') . rand(9999, 99999);
-        \Echron\Tools\FileSystem::createDir($testDir);
-    }
+//    public function testCreateDirectory_NoRights()
+//    {
+//        $this->expectException(\Exception::class);
+//        //TODO: find better way to get directory without rights
+//        $testDir = 'X:\\tmp' . gmdate('U') . random_int(9999, 99999);
+//        FileSystem::createDir($testDir);
+//    }
 }

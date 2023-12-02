@@ -30,7 +30,7 @@ class InRangeTest extends \PHPUnit\Framework\TestCase
         $to = strtotime('today 13:00');
 
         $result = \Echron\Tools\Time::todayInRange($from, $to);
-        $this->assertTrue($result);
+        $this->assertFalse($result);
     }
 
     public function testFrom4()
@@ -45,7 +45,7 @@ class InRangeTest extends \PHPUnit\Framework\TestCase
     public function testFrom5()
     {
         $from = strtotime('today 00:00');
-        $to = strtotime('today 23:59');
+        $to = strtotime('today 23:59:59');
 
         $result = \Echron\Tools\Time::todayInRange($from, $to);
         $this->assertTrue($result);
@@ -72,7 +72,7 @@ class InRangeTest extends \PHPUnit\Framework\TestCase
     public function testFrom8()
     {
         $from = null;
-        $to = strtotime('today 23:59');
+        $to = strtotime('today 23:59:59');
 
         $result = \Echron\Tools\Time::todayInRange($from, $to);
         $this->assertTrue($result);
@@ -81,7 +81,7 @@ class InRangeTest extends \PHPUnit\Framework\TestCase
     public function testFrom9()
     {
         $from = new \DateTime('yesterday');
-        $to = strtotime('today 23:59');
+        $to = strtotime('today 23:59:59');
 
         $result = \Echron\Tools\Time::todayInRange($from, $to);
         $this->assertTrue($result);

@@ -82,34 +82,36 @@ class Time
     public static function todayInRange(
         int|string|\DateTimeInterface|null $periodStartDate,
         int|string|\DateTimeInterface|null $periodEndDate,
-        string                             $startTime = 'today 00:00',
-        string                             $endTime = 'today 23:59:59'
+        string                             $todayStartTime = 'today 00:00',
+        string                             $todayEndTime = 'today 23:59:59'
     ): bool
     {
-        $todayStartInSeconds = (int)gmdate('U', strtotime($startTime));
-        $todayEndInSeconds = (int)gmdate('U', strtotime($endTime));
-
-        $result = false;
-
-//        if ($periodStartDate === null) {
-//            $periodStartDate = gmdate('U', strtotime('yesterday'));
-//        }
+        $todayStartInSeconds = (int)gmdate('U', strtotime($todayStartTime));
+        $todayEndInSeconds = (int)gmdate('U', strtotime($todayEndTime));
 
 
-        if ($periodStartDate !== null) {
-            $startTimeInSeconds = self::getTime($periodStartDate);
-            $endTimeInSeconds = self::getTime($periodEndDate);
+        if ($periodStartDate === null) {
+            $periodStartDate = gmdate('U', strtotime('yesterday'));
+        }
+        if ($periodEndDate === null) {
+            $periodEndDate = gmdate('U', strtotime('tomorrow'));
+        }
 
-//            $x = new \DateTime('now');
-//            $x->setTimestamp($startTimeInSeconds);
-//            $y = new \DateTime('now');
-//            $y->setTimestamp($endTimeInSeconds);
-//            echo 'Period:' . $x->format('Y-m-d H:i:s') . ' ' . $y->format('Y-m-d H:i:s') . PHP_EOL;
-//            $ts = new \DateTime('now');
-//            $ts->setTimestamp(strtotime($startTime));
-//            $te = new \DateTime('now');
-//            $te->setTimestamp(strtotime($endTime));
-//            echo 'Today:' . $ts->format('Y-m-d H:i:s') . ' ' . $te->format('Y-m-d H:i:s') . PHP_EOL;
+
+        //if ($periodStartDate !== null) {
+        $startTimeInSeconds = self::getTime($periodStartDate);
+        $endTimeInSeconds = self::getTime($periodEndDate);
+
+//        $x = new \DateTime('now');
+//        $x->setTimestamp($startTimeInSeconds);
+//        $y = new \DateTime('now');
+//        $y->setTimestamp($endTimeInSeconds);
+//        echo 'Period:' . $x->format('Y-m-d H:i:s') . ' ' . $y->format('Y-m-d H:i:s') . PHP_EOL;
+//        $ts = new \DateTime('now');
+//        $ts->setTimestamp($todayStartInSeconds);
+//        $te = new \DateTime('now');
+//        $te->setTimestamp($todayEndInSeconds);
+//        echo 'Today:' . $ts->format('Y-m-d H:i:s') . ' ' . $te->format('Y-m-d H:i:s') . PHP_EOL;
 //
 //            // End of period is before today started
 //            if ($endTimeInSeconds < $todayStartInSeconds) {
@@ -120,11 +122,7 @@ class Time
 //                return false;
 //            }
 
-            if (($todayStartInSeconds >= $startTimeInSeconds && $todayEndInSeconds <= $endTimeInSeconds) || ($todayStartInSeconds >= $startTimeInSeconds && $endTimeInSeconds === null)) {
-                $result = true;
-            }
-        }
-        return $result;
+        return ($todayStartInSeconds >= $startTimeInSeconds && $todayEndInSeconds <= $endTimeInSeconds) || ($todayStartInSeconds >= $startTimeInSeconds && $endTimeInSeconds === null);
     }
 
     public static function isInPeriod(\DateTimeInterface $from, \DateTimeInterface $to = null, \DateTimeInterface $input = null): bool

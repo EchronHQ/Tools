@@ -83,23 +83,44 @@ class Time
         int|string|\DateTimeInterface|null $periodStartDate,
         int|string|\DateTimeInterface|null $periodEndDate,
         string                             $startTime = 'today 00:00',
-        string                             $endTime = 'today 23:59'
+        string                             $endTime = 'today 23:59:59'
     ): bool
     {
-        $todayStart = gmdate('U', strtotime($startTime));
-        $todayEnd = gmdate('U', strtotime($endTime));
+        $todayStartInSeconds = (int)gmdate('U', strtotime($startTime));
+        $todayEndInSeconds = (int)gmdate('U', strtotime($endTime));
 
         $result = false;
 
-        if (\is_null($periodStartDate)) {
-            $periodStartDate = gmdate('U', strtotime('yesterday'));
-        }
+//        if ($periodStartDate === null) {
+//            $periodStartDate = gmdate('U', strtotime('yesterday'));
+//        }
 
-        if (!\is_null($periodStartDate)) {
+
+        if ($periodStartDate !== null) {
             $startTimeInSeconds = self::getTime($periodStartDate);
             $endTimeInSeconds = self::getTime($periodEndDate);
 
-            if (($todayStart >= $startTimeInSeconds && $todayStart <= $endTime) || ($todayStart >= $startTimeInSeconds && is_null($endTimeInSeconds))) {
+//            $x = new \DateTime('now');
+//            $x->setTimestamp($startTimeInSeconds);
+//            $y = new \DateTime('now');
+//            $y->setTimestamp($endTimeInSeconds);
+//            echo 'Period:' . $x->format('Y-m-d H:i:s') . ' ' . $y->format('Y-m-d H:i:s') . PHP_EOL;
+//            $ts = new \DateTime('now');
+//            $ts->setTimestamp(strtotime($startTime));
+//            $te = new \DateTime('now');
+//            $te->setTimestamp(strtotime($endTime));
+//            echo 'Today:' . $ts->format('Y-m-d H:i:s') . ' ' . $te->format('Y-m-d H:i:s') . PHP_EOL;
+//
+//            // End of period is before today started
+//            if ($endTimeInSeconds < $todayStartInSeconds) {
+//                return false;
+//            }
+//            // Start of period is after today ended
+//            if ($startTimeInSeconds > $todayEndInSeconds) {
+//                return false;
+//            }
+
+            if (($todayStartInSeconds >= $startTimeInSeconds && $todayEndInSeconds <= $endTimeInSeconds) || ($todayStartInSeconds >= $startTimeInSeconds && $endTimeInSeconds === null)) {
                 $result = true;
             }
         }

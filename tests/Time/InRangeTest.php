@@ -18,7 +18,7 @@ class InRangeTest extends \PHPUnit\Framework\TestCase
     public function testFrom2()
     {
         $from = strtotime('yesterday 12:00');
-        $to = strtotime('yesterday 13:00');;
+        $to = strtotime('yesterday 13:00');
 
         $result = \Echron\Tools\Time::todayInRange($from, $to);
         $this->assertFalse($result);

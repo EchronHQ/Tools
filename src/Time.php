@@ -80,10 +80,10 @@ class Time
     }
 
     public static function todayInRange(
-        int|string|null $periodStartDate,
-        int|string|null $periodEndDate,
-        string          $startTime = 'today 00:00',
-        string          $endTime = 'today 23:59'
+        int|string|\DateTimeInterface|null $periodStartDate,
+        int|string|\DateTimeInterface|null $periodEndDate,
+        string                             $startTime = 'today 00:00',
+        string                             $endTime = 'today 23:59'
     ): bool
     {
         $todayStart = gmdate('U', strtotime($startTime));
@@ -96,17 +96,17 @@ class Time
         }
 
         if (!\is_null($periodStartDate)) {
-            $startTime = self::getTime($periodStartDate);
-            $endTime = self::getTime($periodEndDate);
+            $startTimeInSeconds = self::getTime($periodStartDate);
+            $endTimeInSeconds = self::getTime($periodEndDate);
 
-            if (($todayStart >= $startTime && $todayStart <= $endTime) || ($todayStart >= $startTime && is_null($endTime))) {
+            if (($todayStart >= $startTimeInSeconds && $todayStart <= $endTime) || ($todayStart >= $startTimeInSeconds && is_null($endTimeInSeconds))) {
                 $result = true;
             }
         }
         return $result;
     }
 
-    public static function isInPeriod(\DateTime $from, \DateTime $to = null, \DateTime $input = null): bool
+    public static function isInPeriod(\DateTimeInterface $from, \DateTimeInterface $to = null, \DateTimeInterface $input = null): bool
     {
         if (\is_null($input)) {
             $input = new \DateTime();
@@ -125,13 +125,16 @@ class Time
         return false;
     }
 
-    private static function getTime(mixed $input): int|null
+    private static function getTime(int|string|\DateTimeInterface|null $input): int|null
     {
         if (is_numeric($input)) {
             return (int)$input;
         }
         if (is_string($input)) {
             return strtotime($input);
+        }
+        if ($input instanceof \DateTimeInterface) {
+            return $input->getTimestamp();
         }
 
         return null;

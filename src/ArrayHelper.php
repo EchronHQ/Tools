@@ -73,8 +73,11 @@ class ArrayHelper
      * @return array
      * @throws \Exception
      */
-    public static function shuffle(array $input, int $seed): array
+    public static function shuffle(array $input, int|null $seed = null): array
     {
+        if ($seed === null) {
+            $seed = mt_rand();
+        }
         mt_srand($seed);
         $size = count($input);
         for ($i = $size - 1; $i > 0; $i--) {
@@ -85,6 +88,14 @@ class ArrayHelper
         }
         // Make sure our seed is random again
         mt_srand();
+        return $input;
+    }
+
+    public static function limit(array $input, int $max): array
+    {
+        if (count($input) > $max) {
+            return array_slice($input, 0, $max);
+        }
         return $input;
     }
 }

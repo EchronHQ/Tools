@@ -4,42 +4,54 @@ declare(strict_types=1);
 
 namespace Echron\Tools;
 
+use Random\RandomException;
+
 class StringHelper
 {
+    /**
+     * @param string $haystack
+     * @param string $needle
+     * @return bool
+     * @deprecated Use build in method `str_starts_with` instead (available since PHP 8.0)
+     */
     public static function startsWith(string $haystack, string $needle): bool
     {
-        return $needle === '' || strrpos($haystack, $needle, -strlen($haystack)) !== false;
+        return str_starts_with($haystack, $needle);
     }
 
+    /**
+     * @param string $haystack
+     * @param string $needle
+     * @return bool
+     * @deprecated Use build in method `str_ends_with` instead (available since PHP 8.0)
+     */
     public static function endsWith(string $haystack, string $needle): bool
     {
-        $needleLength = strlen($needle);
-        if ($needleLength === 0) {
-            return true;
-        }
-
-        return (substr($haystack, -$needleLength) === $needle);
+        return str_ends_with($haystack, $needle);
     }
 
+    /**
+     * @param string $hayStack
+     * @param string $needle
+     * @param bool $caseSensitive
+     * @return bool
+     * @deprecated Use build in method `str_contains` (case sensitive) instead (available since PHP 8.0)
+     */
     public static function contains(string $hayStack, string $needle, bool $caseSensitive = false): bool
     {
-        $contains = false;
         if ($caseSensitive) {
-            $contains = strpos($hayStack, $needle) !== false;
-        } else {
-            $contains = stripos($hayStack, $needle) !== false;
+            return str_contains($hayStack, $needle);
         }
-
-        return $contains;
+        return mb_stripos($hayStack, $needle) !== false;
     }
 
     public static function equals(string $input1, string $input2, bool $caseSensitive = false): bool
     {
         if ($caseSensitive) {
             return strcmp($input1, $input2) === 0;
-        } else {
-            return strcasecmp($input1, $input2) === 0;
         }
+
+        return strcasecmp($input1, $input2) === 0;
     }
 
     public static function mask(
@@ -83,12 +95,13 @@ class StringHelper
     /**
      * Generate 128-bit GUID
      * @return string
+     * @throws RandomException
      */
     public static function generateGuid(): string
     {
         // Generate 16 bytes (128 bits) of random data.
         $data = random_bytes(16);
-        assert(strlen($data) == 16);
+        assert(strlen($data) === 16);
 
         // Set version to 0100
         $data[6] = chr(ord($data[6]) & 0x0f | 0x40);

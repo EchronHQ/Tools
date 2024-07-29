@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Echron\Tools;
 
-use Random\RandomException;
-
 class StringHelper
 {
     /**
@@ -95,7 +93,7 @@ class StringHelper
     /**
      * Generate 128-bit GUID
      * @return string
-     * @throws RandomException
+     * @throws \Random\RandomException
      */
     public static function generateGuid(): string
     {

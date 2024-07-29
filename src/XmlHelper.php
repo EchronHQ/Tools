@@ -29,8 +29,7 @@ class XmlHelper
     private static function cleanupMeta(string $xml): string
     {
         //Temp fix
-        $xml = str_replace("\x01", "", $xml);
-        return str_replace("\x02", "", $xml);
+        return str_replace(["\x01", "\x02"], "", $xml);
 
     }
 
@@ -113,9 +112,9 @@ class XmlHelper
                 $message = $error['message'];
 
                 throw new \Exception('Unable to save XML file: ' . $message);
-            } else {
-                throw new \Exception('Unable to save XML file: unknown exception');
             }
+
+            throw new \Exception('Unable to save XML file: unknown exception');
 
         }
         libxml_use_internal_errors(false);

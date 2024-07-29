@@ -9,45 +9,6 @@ use Echron\Tools\Exception\PermissionsDeniedException;
 
 class FileSystem
 {
-    public static function createDir(string $path, bool $recursive = true, int $permissions = 0777, bool $ignoreIfExists = true): void
-    {
-        if (self::dirExists($path)) {
-            if ($ignoreIfExists) {
-                return;
-            }
-
-            throw new FileAlreadyExistsException('Unable to create directory "' . $path . '": directory already exists');
-        }
-        $exception = null;
-        $old = error_reporting(0);
-        try {
-            $created = mkdir($path, $permissions, $recursive);
-            if (!$created) {
-                if (ExceptionHelper::hasLastError()) {
-                    $exception = ExceptionHelper::getLastError();
-                } else {
-                    $exception = new \Exception('Unable to create directory');
-                }
-            }
-        } catch (\Throwable $ex) {
-            $exception = $ex;
-        }
-        error_reporting($old);
-
-        if ($exception !== null) {
-            switch ($exception->getMessage()) {
-                case 'mkdir(): Permissions denied':
-                    throw new PermissionsDeniedException('Unable to create directory "' . $path . '": permissions denied');
-
-                case 'mkdir(): File exists':
-                    throw new FileAlreadyExistsException('Unable to create directory "' . $path . '": directory already exists');
-
-                default:
-                    throw $exception;
-            }
-        }
-    }
-
     public static function isReadable(string $path, bool $clearStatCache = false): bool
     {
         if ($clearStatCache) {
@@ -64,15 +25,6 @@ class FileSystem
         }
 
         return is_writable($path);
-    }
-
-    public static function dirExists(string $path, bool $clearStatCache = false): bool
-    {
-        if ($clearStatCache) {
-            clearstatcache(true, $path);
-        }
-
-        return file_exists($path) && is_dir($path);
     }
 
     public static function fileExists(string $path, bool $clearStatCache = false): bool
@@ -193,7 +145,7 @@ class FileSystem
             }
         }
 
-        return preg_replace('#/+#', \DIRECTORY_SEPARATOR, join(\DIRECTORY_SEPARATOR, $paths));
+        return preg_replace('#/+#', \DIRECTORY_SEPARATOR, implode(\DIRECTORY_SEPARATOR, $paths));
     }
 
     public static function copyDirectory(string $source, string $destination, bool $recursive = false): void
@@ -209,7 +161,7 @@ class FileSystem
 
         // Loop through the files in source directory
         while (false !== ($file = readdir($dir))) {
-            if (($file != '.') && ($file != '..')) {
+            if (($file !== '.') && ($file !== '..')) {
                 if (is_dir($source . \DIRECTORY_SEPARATOR . $file)) {
                     // Recursively calling custom copy function
                     // for sub directory
@@ -223,6 +175,54 @@ class FileSystem
         }
 
         closedir($dir);
+    }
+
+    public static function createDir(string $path, bool $recursive = true, int $permissions = 0777, bool $ignoreIfExists = true): void
+    {
+        if (self::dirExists($path)) {
+            if ($ignoreIfExists) {
+                return;
+            }
+
+            throw new FileAlreadyExistsException('Unable to create directory "' . $path . '": directory already exists');
+        }
+        $exception = null;
+        $old = error_reporting(0);
+        try {
+            $created = mkdir($path, $permissions, $recursive);
+            if (!$created) {
+                if (ExceptionHelper::hasLastError()) {
+                    $exception = ExceptionHelper::getLastError();
+                } else {
+                    $exception = new \Exception('Unable to create directory');
+                }
+            }
+        } catch (\Throwable $ex) {
+            $exception = $ex;
+        }
+        error_reporting($old);
+
+        if ($exception !== null) {
+            switch ($exception->getMessage()) {
+                case 'mkdir(): Permissions denied':
+                    throw new PermissionsDeniedException('Unable to create directory "' . $path . '": permissions denied');
+
+                case 'mkdir(): File exists':
+                    throw new FileAlreadyExistsException('Unable to create directory "' . $path . '": directory already exists');
+
+                default:
+                    throw $exception;
+            }
+        }
+    }
+
+    public static function dirExists(string $path, bool $clearStatCache = false): bool
+    {
+        if ($clearStatCache) {
+            clearstatcache(true, $path);
+        }
+
+        return file_exists($path) && is_dir($path);
     }
 
     public static function getFileModificationTime(string $fileName): int

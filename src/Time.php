@@ -125,25 +125,6 @@ class Time
         return ($todayStartInSeconds >= $startTimeInSeconds && $todayEndInSeconds <= $endTimeInSeconds) || ($todayStartInSeconds >= $startTimeInSeconds && $endTimeInSeconds === null);
     }
 
-    public static function isInPeriod(\DateTimeInterface $from, \DateTimeInterface $to = null, \DateTimeInterface $input = null): bool
-    {
-        if (\is_null($input)) {
-            $input = new \DateTime();
-        }
-        //Reverse 'to' & 'from' when 'to' is earlier than 'from''
-        if (!is_null($to) && $from > $to) {
-            $tmp = $from;
-            $from = $to;
-            $to = $tmp;
-        }
-
-        if (($input >= $from && $input <= $to) || ($input >= $from && is_null($to))) {
-            return true;
-        }
-
-        return false;
-    }
-
     private static function getTime(int|string|\DateTimeInterface|null $input): int|null
     {
         if (is_numeric($input)) {
@@ -157,6 +138,21 @@ class Time
         }
 
         return null;
+    }
+
+    public static function isInPeriod(\DateTimeInterface $from, \DateTimeInterface $to = null, \DateTimeInterface $input = null): bool
+    {
+        if (\is_null($input)) {
+            $input = new \DateTime();
+        }
+        //Reverse 'to' & 'from' when 'to' is earlier than 'from''
+        if (!is_null($to) && $from > $to) {
+            $tmp = $from;
+            $from = $to;
+            $to = $tmp;
+        }
+
+        return ($input >= $from && $input <= $to) || ($input >= $from && null === $to);
     }
 
     /**

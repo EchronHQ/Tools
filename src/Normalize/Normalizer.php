@@ -6,6 +6,17 @@ namespace Echron\Tools\Normalize;
 
 class Normalizer
 {
+    public static function normalizeCollection(array $codes, NormalizeConfig $keyFormatConfig = null): array
+    {
+        $result = [];
+
+        foreach ($codes as $code) {
+            $result[] = self::normalize($code, $keyFormatConfig);
+        }
+
+        return $result;
+    }
+
     public static function normalize(string $code, NormalizeConfig $keyFormatConfig = null): string
     {
         // TODO: this is quite a slow function and called loads of times
@@ -41,7 +52,7 @@ class Normalizer
             //'(\+{2,})',
         ];
 
-        if ($keyFormatConfig->isAllowSlash() && $keyFormatConfig->allowConsecutiveSlashes > 0) {
+        if ($keyFormatConfig->allowConsecutiveSlashes > 0 && $keyFormatConfig->isAllowSlash()) {
             $allowedChars[] = '\/';
             //            $notAllowed[] =  '(\/{2,})';
         }
@@ -88,15 +99,15 @@ class Normalizer
         $id = preg_replace($regex, '_', $id);
 
 
-        if ($keyFormatConfig->isAllowSlash() && $keyFormatConfig->allowConsecutiveSlashes > 0) {
+        if ($keyFormatConfig->allowConsecutiveSlashes > 0 && $keyFormatConfig->isAllowSlash()) {
             $regex = '/(\/{' . ($keyFormatConfig->allowConsecutiveSlashes + 1) . ',})/mi';
             $id = preg_replace($regex, \str_repeat('/', $keyFormatConfig->allowConsecutiveSlashes), $id);
         }
-        if ($keyFormatConfig->isAllowDot() && $keyFormatConfig->allowConsecutiveDots > 0) {
+        if ($keyFormatConfig->allowConsecutiveDots > 0 && $keyFormatConfig->isAllowDot()) {
             $regex = '/(\.{' . ($keyFormatConfig->allowConsecutiveDots + 1) . ',})/mi';
             $id = preg_replace($regex, \str_repeat('.', $keyFormatConfig->allowConsecutiveDots), $id);
         }
-        if ($keyFormatConfig->isAllowDash() && $keyFormatConfig->allowConsecutiveDashes > 0) {
+        if ($keyFormatConfig->allowConsecutiveDashes > 0 && $keyFormatConfig->isAllowDash()) {
             $regex = '/(\-{' . ($keyFormatConfig->allowConsecutiveDashes + 1) . ',})/mi';
             $id = preg_replace($regex, \str_repeat('-', $keyFormatConfig->allowConsecutiveDashes), $id);
         }
@@ -114,16 +125,5 @@ class Normalizer
 
         return $id;
         //        return new NormalizedCode($id);
-    }
-
-    public static function normalizeCollection(array $codes, NormalizeConfig $keyFormatConfig = null): array
-    {
-        $result = [];
-
-        foreach ($codes as $code) {
-            $result[] = self::normalize($code, $keyFormatConfig);
-        }
-
-        return $result;
     }
 }

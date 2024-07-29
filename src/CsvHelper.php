@@ -6,7 +6,7 @@ namespace Echron\Tools;
 
 class CsvHelper
 {
-    public static function toCSVFile(array $data, string $filePath, string $lineDelimiter = PHP_EOL, $delimiter = ';', $encapsulate = '"'): void
+    public static function toCSVFile(array $data, string $filePath, string $lineDelimiter = PHP_EOL, string $delimiter = ';', string $encapsulate = '"'): void
     {
         $rows = [];
 
@@ -27,7 +27,7 @@ class CsvHelper
                 }
             }
         }
-        $rows[] = CsvHelper::toCSVRow($headers, $delimiter, $encapsulate);
+        $rows[] = self::toCSVRow($headers, $delimiter, $encapsulate);
         foreach ($data as $dat) {
 
             $rowFields = [];
@@ -40,7 +40,7 @@ class CsvHelper
                 }
                 $rowFields[] = $rowFieldValue;
             }
-            $rows[] = CsvHelper::toCSVRow($rowFields, $delimiter, $encapsulate);
+            $rows[] = self::toCSVRow($rowFields, $delimiter, $encapsulate);
         }
 
         file_put_contents($filePath, implode($lineDelimiter, $rows));

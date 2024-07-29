@@ -6,12 +6,61 @@ namespace Echron\Tools;
 
 class CsvHelper
 {
+    public static function toCSVFile(array $data, string $filePath, string $lineDelimiter = PHP_EOL, $delimiter = ';', $encapsulate = '"'): void
+    {
+        $rows = [];
+
+        $headers = null;
+        foreach ($data as $dat) {
+            if ($headers === null) {
+                // TODO: validate that all rows have the same keys?
+                $headers = array_keys($dat);
+            } else {
+                $diff = array_diff($headers, array_keys($dat));
+                if (count($diff) > 0) {
+                    // TODO: implement this
+
+//                    var_dump($diff);
+//                    foreach ($diff as $diffKey) {
+//
+//                    }
+                }
+            }
+        }
+        $rows[] = CsvHelper::toCSVRow($headers, $delimiter, $encapsulate);
+        foreach ($data as $dat) {
+
+            $rowFields = [];
+            foreach ($headers as $header) {
+                $rowFieldValue = '';
+                if (isset($dat[$header])) {
+                    $rowFieldValue = (string)$dat[$header];
+                } else {
+                    // TODO: log this
+                }
+                $rowFields[] = $rowFieldValue;
+            }
+            $rows[] = CsvHelper::toCSVRow($rowFields, $delimiter, $encapsulate);
+        }
+
+        file_put_contents($filePath, implode($lineDelimiter, $rows));
+    }
+
+    private static function toCSVRow(array $values, string $delimiter, string $encapsulate): string
+    {
+        $values = array_map(function (string $value) use ($encapsulate) {
+            return $encapsulate . $value . $encapsulate;
+        }, $values);
+        return implode($delimiter, $values);
+    }
+
     public static function parseCSVFile(
         string $filePath,
         string $lineDelimiter = \PHP_EOL,
         string $delimiter = ';',
         array  $headers = null
-    ): array {
+    ): array
+    {
         // TODO: method uses a lot of memory when reading large CSV files, is there a way to reduce this?
         if (!\file_exists($filePath)) {
             throw new \Exception('Unable to get FileMaker products: CSV file "' . $filePath . '" does not exist');

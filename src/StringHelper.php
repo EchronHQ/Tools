@@ -203,16 +203,24 @@ class StringHelper
             $endLength = 0;
         }
 
-        $x = $maxCharacters - $endLength;
-        if ($x < 0) {
+        $findSpaceBeforePosition = $maxCharacters - $endLength;
+        if ($findSpaceBeforePosition < 0) {
             return '';
         }
+        $x = mb_strimwidth($input . ' ', 0, $findSpaceBeforePosition + 1, '', 'UTF-8');
 
-
-        $lastSpaceBeforeMaxCharacters = mb_strrpos(mb_substr($input . ' ', 0, $x + 1), ' ');
+        $lastSpaceBeforeMaxCharacters = mb_strrpos($x, ' ');
         if ($lastSpaceBeforeMaxCharacters === false) {
             return '';
         }
-        return mb_substr($input, 0, $lastSpaceBeforeMaxCharacters) . $end;
+        return mb_strimwidth($input, 0, $lastSpaceBeforeMaxCharacters + $endLength, $end, 'UTF-8');
+    }
+
+    public static function limit(string $input, int $maxCharacters, string $end = ''): string
+    {
+        if (mb_strwidth($input, 'UTF-8') <= $maxCharacters) {
+            return $input;
+        }
+        return mb_strimwidth($input, 0, $maxCharacters, $end, 'UTF-8');
     }
 }

@@ -180,4 +180,39 @@ class StringHelper
         }
         return (int)\round($checksum / \strlen($characters) * $max, 0);
     }
+
+    /**
+     * This will cut off the string keeping words intact. When passing on the end, the length of the end will be calculated in
+     * the max character count so even with an end the character count will never be more than the max count
+     *
+     * @param string $input
+     * @param int $maxCharacters
+     * @param string $end
+     * @return string
+     */
+    public static function limitWords(string $input, int $maxCharacters, string $end = ''): string
+    {
+        $inputLength = mb_strwidth($input, 'UTF-8');
+        if ($inputLength <= $maxCharacters) {
+            return $input;
+        }
+        $endLength = mb_strwidth($end, 'UTF-8');
+
+        if ($maxCharacters <= $endLength) {
+            $end = '';
+            $endLength = 0;
+        }
+
+        $x = $maxCharacters - $endLength;
+        if ($x < 0) {
+            return '';
+        }
+
+
+        $lastSpaceBeforeMaxCharacters = mb_strrpos(mb_substr($input . ' ', 0, $x + 1), ' ');
+        if ($lastSpaceBeforeMaxCharacters === false) {
+            return '';
+        }
+        return mb_substr($input, 0, $lastSpaceBeforeMaxCharacters) . $end;
+    }
 }

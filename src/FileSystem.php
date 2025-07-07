@@ -62,7 +62,7 @@ class FileSystem
         return $bytesWritten;
     }
 
-    public static function touch(string $path, \DateTime $modificationTime = null, \DateTime $accessTime = null): void
+    public static function touch(string $path, \DateTime|null $modificationTime = null, \DateTime|null $accessTime = null): void
     {
         $exception = null;
         $old = error_reporting(0);

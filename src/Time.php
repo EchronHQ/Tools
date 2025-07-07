@@ -140,7 +140,7 @@ class Time
         return null;
     }
 
-    public static function isInPeriod(\DateTimeInterface $from, \DateTimeInterface $to = null, \DateTimeInterface $input = null): bool
+    public static function isInPeriod(\DateTimeInterface $from, \DateTimeInterface|null $to = null, \DateTimeInterface|null $input = null): bool
     {
         if (\is_null($input)) {
             $input = new \DateTime();

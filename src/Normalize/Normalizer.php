@@ -6,7 +6,7 @@ namespace Echron\Tools\Normalize;
 
 class Normalizer
 {
-    public static function normalizeCollection(array $codes, NormalizeConfig $keyFormatConfig = null): array
+    public static function normalizeCollection(array $codes, NormalizeConfig|null $keyFormatConfig = null): array
     {
         $result = [];
 
@@ -17,7 +17,7 @@ class Normalizer
         return $result;
     }
 
-    public static function normalize(string $code, NormalizeConfig $keyFormatConfig = null): string
+    public static function normalize(string $code, NormalizeConfig|null $keyFormatConfig = null): string
     {
         // TODO: this is quite a slow function and called loads of times
         if ($keyFormatConfig === null) {

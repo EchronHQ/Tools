@@ -67,7 +67,7 @@ class CsvHelper
             $fp = fopen($filePath, 'rb');
 
 
-            while (($lineData = fgetcsv($fp, null, $delimiter)) !== false) {
+            while (($lineData = fgetcsv($fp, null, $delimiter,'"','\\')) !== false) {
                 if (\is_null($headers)) {
                     $headers = $lineData;
                 } else {

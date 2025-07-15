@@ -58,42 +58,71 @@ class CsvHelper
             throw new \Exception('Unable to get FileMaker products: CSV file "' . $filePath . '" does not exist');
         }
         $result = [];
-
-
-        $fileData = file_get_contents($filePath);
-
-
         $row = 1;
 
-        $lines = \str_getcsv($fileData, $lineDelimiter);
+        $useNew = true;
+        if ($useNew) {
 
-        foreach ($lines as $line) {
-            $lineData = \str_getcsv($line, $delimiter);
 
-            if (\is_null($headers)) {
-                $headers = $lineData;
-            } else {
-                $num = count($lineData);
-                $row++;
+            $fp = fopen($filePath, 'rb');
 
-                $productData = [];
-                for ($c = 0; $c < $num; $c++) {
-                    $field = $c;
-                    if (isset($headers[$c])) {
-                        $field = $headers[$c];
-                    } else {
-                        // TODO: should we log this?
+
+            while (($lineData = fgetcsv($fp, null, $delimiter)) !== false) {
+                if (\is_null($headers)) {
+                    $headers = $lineData;
+                } else {
+                    $num = count($lineData);
+                    $row++;
+
+                    $productData = [];
+                    for ($c = 0; $c < $num; $c++) {
+                        $field = $c;
+                        if (isset($headers[$c])) {
+                            $field = $headers[$c];
+                        } else {
+                            // TODO: should we log this?
+                        }
+
+                        $productData[$field] = $lineData[$c];
                     }
 
-                    $productData[$field] = $lineData[$c];
+                    $result[] = $productData;
                 }
-
-                $result[] = $productData;
             }
+            fclose($fp);
+        } else {
+
+            $fileData = file_get_contents($filePath);
+            $lines = \str_getcsv($fileData, $lineDelimiter);
+
+            foreach ($lines as $line) {
+                $lineData = \str_getcsv($line, $delimiter);
+
+                if (\is_null($headers)) {
+                    $headers = $lineData;
+                } else {
+                    $num = count($lineData);
+                    $row++;
+
+                    $productData = [];
+                    for ($c = 0; $c < $num; $c++) {
+                        $field = $c;
+                        if (isset($headers[$c])) {
+                            $field = $headers[$c];
+                        } else {
+                            // TODO: should we log this?
+                        }
+
+                        $productData[$field] = $lineData[$c];
+                    }
+
+                    $result[] = $productData;
+                }
+            }
+
+            unset($fileData, $lines);
         }
 
-        unset($fileData);
-        unset($lines);
 
         return $result;
     }

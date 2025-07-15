@@ -77,6 +77,7 @@ class FileSystem
             }
             $changed = false;
             if (!is_null($modificationTimeInt) && !\is_null($accessTimeInt)) {
+                /** @noinspection PotentialMalwareInspection */
                 $changed = touch($path, $modificationTimeInt, $accessTimeInt);
             } elseif (!is_null($modificationTimeInt)) {
                 $changed = touch($path, $modificationTimeInt);

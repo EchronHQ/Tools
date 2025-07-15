@@ -46,19 +46,11 @@ class CsvHelper
         file_put_contents($filePath, implode($lineDelimiter, $rows));
     }
 
-    private static function toCSVRow(array $values, string $delimiter, string $encapsulate): string
-    {
-        $values = array_map(function (string $value) use ($encapsulate) {
-            return $encapsulate . $value . $encapsulate;
-        }, $values);
-        return implode($delimiter, $values);
-    }
-
     public static function parseCSVFile(
-        string $filePath,
-        string $lineDelimiter = \PHP_EOL,
-        string $delimiter = ';',
-        array  $headers = null
+        string     $filePath,
+        string     $lineDelimiter = \PHP_EOL,
+        string     $delimiter = ';',
+        array|null $headers = null
     ): array
     {
         // TODO: method uses a lot of memory when reading large CSV files, is there a way to reduce this?
@@ -104,6 +96,14 @@ class CsvHelper
         unset($lines);
 
         return $result;
+    }
+
+    private static function toCSVRow(array $values, string $delimiter, string $encapsulate): string
+    {
+        $values = array_map(function (string $value) use ($encapsulate) {
+            return $encapsulate . $value . $encapsulate;
+        }, $values);
+        return implode($delimiter, $values);
     }
 
 }

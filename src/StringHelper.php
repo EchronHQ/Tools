@@ -151,7 +151,7 @@ class StringHelper
      * @param int|null $max
      * @return int
      */
-    public static function checksum(string $title, int $max = null): int
+    public static function checksum(string $title, int|null $max = null): int
     {
         $characters = "abcdefghijklmnopqrstuvwxyz0123456789";
 
